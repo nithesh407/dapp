@@ -2,7 +2,7 @@ import New from './New';
 function App() {
   return (
     <div className="App">
-      <h1>hello</h1>
+      <h1 >LOGIN</h1>
       <New />
     </div>
   );
