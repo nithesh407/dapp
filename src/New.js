@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Space } from 'antd';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -56,7 +56,7 @@ const New = () => {
       name="control-hooks"
       onFinish={onFinish}
       style={{
-        maxWidth: 600,
+        maxWidth: 600,marginLeft: '400px',marginTop: '150px',position: "relative"
       }}
     >
       <Form.Item
@@ -69,31 +69,32 @@ const New = () => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder='Enter Username'/>
       </Form.Item>
       <Form.Item
       label="Password"
       name="password"
       rules={[
         {
+         
           required: true,
           message: 'Please input your password!',
         },
       ]}
     >
-      <Input.Password />
+      <Input.Password placeholder='Enter Password' />
     </Form.Item>
       <Form.Item
-        name="Role"
-        label="Role"
+        name="Role  "
+        label="Role   "
         rules={[
           {
             required: true,
           },
-        ]}
+        ]} style={{marginRight:'10px'}}
       >
         <Select
-          placeholder="Select a option and change input text above"
+          placeholder="Select a role"
           onChange={onGenderChange}
           allowClear
         >
@@ -122,16 +123,18 @@ const New = () => {
             </Form.Item>
           ) : null
         }
+        <Form.Item name="FPA"
+        label="FPA">
+         <Space.Compact style={{ width: '100%'}}>
+      <Input  placeholder="Enter FPA"/>
+      
+      <Button type="primary">Generate FPA</Button>
+    </Space.Compact>
+    </Form.Item>
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" style={{ marginLeft:'90px'}}>
           Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
         </Button>
       </Form.Item>
     </Form>
