@@ -1,57 +1,77 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
-const onFinish = (values) => {
-  console.log('Success:', values);
+import { Button, Form, Input, Select } from 'antd';
+const { Option } = Select;
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
 };
-
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
 };
-
-const filterOption = (input, option) =>
-  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-const onSearch = (value) => {
-  console.log('search:', value);
-};
-
-const onChange = (value) => {
-  console.log('Selected:', value);
-};
-
-const New = () => (
-  <Form
-    name="basic"
-    labelCol={{
-      span: 8,
-    }}
-    wrapperCol={{
-      span: 16,
-    }}
-    style={{
-      maxWidth: 600,
-    }}
-    initialValues={{
-      remember: true,
-    }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item
-      label="Username"
-      name="username"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your username!',
-        },
-      ]}
+const New = () => {
+  const [form] = Form.useForm();
+  const onGenderChange = (value) => {
+    switch (value) {
+      case 'Lawyer':
+        form.setFieldsValue({
+          note: 'Hi, Lawyer!',
+        });
+        break;
+      case 'Judge':
+        form.setFieldsValue({
+          note: 'Hi, Judge!',
+        });
+        break;
+      case 'Client':
+        form.setFieldsValue({
+          note: 'Hi there!',
+        });
+        break;
+      default:
+    }
+  };
+  const onFinish = (values) => {
+    console.log(values);
+  };
+  const onReset = () => {
+    form.resetFields();
+  };
+  const onFill = () => {
+    form.setFieldsValue({
+      note: 'Hello world!',
+      gender: 'male',
+    });
+  };
+  return (
+    <Form
+      {...layout}
+      form={form}
+      name="control-hooks"
+      onFinish={onFinish}
+      style={{
+        maxWidth: 600,
+      }}
     >
-      <Input />
-    </Form.Item>
-
-    <Form.Item
+      <Form.Item
+        name="Username"
+        label="Username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your username!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
       label="Password"
       name="password"
       rules={[
@@ -63,71 +83,58 @@ const New = () => (
     >
       <Input.Password />
     </Form.Item>
-    <>
       <Form.Item
+        name="Role"
         label="Role"
-        name="Roles"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
         <Select
-          showSearch
-          placeholder="Select your role"
-          optionFilterProp="role"
-          onChange={onChange}
-          onSearch={onSearch}
-          filterOption={filterOption}
-          options={[
-            {
-              value: 'Judge',
-              label: 'Judge',
-            },
-            {
-              value: 'Lawyer',
-              label: 'Lawyer',
-            },
-            {
-              value: 'Client',
-              label: 'Client',
-            },
-            {
-                value: 'Administrator',
-                label: 'Administrator',
-            },
-          ]}
-        />
+          placeholder="Select a option and change input text above"
+          onChange={onGenderChange}
+          allowClear
+        >
+          <Option value="Lawyer">Lawyer</Option>
+          <Option value="Judge">Judge</Option>
+          <Option value="Client">Client</Option>
+          <Option value="Client">Administrator</Option>
+        </Select>
       </Form.Item>
-
       <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
+        noStyle
+        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
       >
+        {({ getFieldValue }) =>
+          getFieldValue('gender') === 'other' ? (
+            <Form.Item
+              name="customizeGender"
+              label="Customize Gender"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          ) : null
+        }
+      </Form.Item>
+      <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
+        <Button htmlType="button" onClick={onReset}>
+          Reset
+        </Button>
+        <Button type="link" htmlType="button" onClick={onFill}>
+          Fill form
+        </Button>
       </Form.Item>
-      <Form.Item
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-      
-    >
-    </Form.Item>
-    <Checkbox>Remember me</Checkbox>
-    </>
-  </Form> 
-);
-export default New;    
-
-
-
-
-
-
+    </Form>
+  );
+};
+export default New;
