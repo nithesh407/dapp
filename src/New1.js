@@ -15,7 +15,7 @@ const tailLayout = {
     span: 16,
   },
 };
-const New = () => {
+const New1 = () => {
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
 
@@ -69,49 +69,69 @@ const New = () => {
       }}
     >
       <Form.Item
-        name="Username"
-        label="Username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input placeholder="Enter Username" />
-      </Form.Item>
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password placeholder="Enter Password" />
-      </Form.Item>
-      <Form.Item
-        name="Role"
-        label="Role"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Select
-          placeholder="Select a role"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="Lawyer">Lawyer</Option>
-          <Option value="Judge">Judge</Option>
-          <Option value="Client">Client</Option>
-          <Option value="Administrator">Administrator</Option>
-        </Select>
-      </Form.Item>
+  name="Username"
+  label="Username"
+  rules={[
+    {
+      validator: (_, value) => {
+        if (!value || value.length === 0) {
+          return Promise.reject('Enter the username');
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input placeholder="Enter Username" />
+</Form.Item>
+
+<Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    {
+      validator: (_, value) => {
+        if (!value) {
+          return Promise.reject('Enter the password');
+        } else if (value.length === 10) {
+          return Promise.reject('Password cannot be exactly 10 characters long!');
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input.Password placeholder="Enter Password" />
+</Form.Item>
+
+
+<Form.Item
+  name="Role"
+  label="Role"
+  rules={[
+    {
+      validator: (_, value) => {
+        if (!value || value.length === 0) {
+          return Promise.reject('Select a role');
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Select
+    placeholder="Select a role"
+    onChange={onGenderChange}
+    allowClear
+  >
+    <Option value="Lawyer">Lawyer</Option>
+    <Option value="Judge">Judge</Option>
+    <Option value="Client">Client</Option>
+    <Option value="Administrator">Administrator</Option>
+  </Select>
+</Form.Item>
+
+
       <Form.Item
         noStyle
         shouldUpdate={(prevValues, currentValues) =>
@@ -167,4 +187,4 @@ const New = () => {
     </Form>
   );
 };
-export default New;
+export default New1;
