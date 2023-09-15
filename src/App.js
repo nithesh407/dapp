@@ -1,8 +1,12 @@
-import Signup from "./judgeSignUp";
-
+import Judge from "./signup/judgeSignUp";
+import Lawyer from "./signup/lawyerSignUp";
 const App=()=>{
   return(
-    <Signup />
+    <>
+    <Lawyer /> 
+    <Judge/>
+    </>
+
   )
 }
 export default App;
