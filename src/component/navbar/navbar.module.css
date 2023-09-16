@@ -1,0 +1,7 @@
+/* App.css */
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  
