@@ -61,7 +61,7 @@ const App = () => {
 
     <div className={styles['menu-container']} >
      
-     <Menu style={{minWidth:750}}   onClick={onClick} selectedKeys={[current]} mode="horizontal">
+     <Menu style={{minWidth:1180}}   onClick={onClick} selectedKeys={[current]} mode="horizontal">
         {leftItems.map((item) => (
           <Menu.Item key={item.key} icon={item.icon}>
             {item.label}
