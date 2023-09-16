@@ -4,7 +4,7 @@ import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-de
 
 const { Option } = Select;
 
-const Judge = () => {
+const Client = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
@@ -148,6 +148,24 @@ const Judge = () => {
             style={{ width: '100%' }}
           />
         </Form.Item>
+        {/* Aadhar Number Input */}
+<Form.Item
+  label="Aadhar Number"
+  name="aadharNumber"
+  rules={[
+    { required: true, message: 'Please input your Aadhar number!' },
+    {
+      pattern: /^\d{12}$/,
+      message: 'Invalid Aadhar number format! Aadhar number should be exactly 12 digits.',
+    },
+  ]}
+  colon={false}
+>
+  <Input
+    prefix={<UserOutlined />}
+    style={{ width: '100%' }}
+  />
+</Form.Item>
 
         {/* Password Input */}
         <Form.Item
@@ -187,8 +205,8 @@ const Judge = () => {
             style={{ width: '100%' }}
           />
         </Form.Item>
-
-        <Form.Item label="Select State" colon={false}>
+      {/* Select State */}
+      <Form.Item label="Select State" colon={false}>
           <Select
             style={{ width: '100%' }}
             placeholder="Select State"
@@ -203,6 +221,7 @@ const Judge = () => {
           </Select>
         </Form.Item>
 
+        {/* Select Court Type */}
         <Form.Item label="Select Court Type" colon={false}>
           <Select
             style={{ width: '100%' }}
@@ -215,25 +234,22 @@ const Judge = () => {
           </Select>
         </Form.Item>
 
-        {selectedCourt === "districtCourt" && selectedState && (
-          <Form.Item label="Select District" colon={false}>
-            <Select
-              style={{ width: '100%' }}
-              placeholder="Select District"
-              
-              
-            >
-              {optionsData[selectedState].map((value) => (
-                <Option key={value} value={value}>
-                  {value}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        )}
+        {/* Display District Input */}
+        <Form.Item label="Select District" colon={false}>
+          <Select
+            style={{ width: '100%' }}
+            placeholder="Select District"
+          >
+            {selectedState && optionsData[selectedState].map((value) => (
+              <Option key={value} value={value}>
+                {value}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-90px' }}>
+          <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-100px' }}>
             Register
           </Button>
         </Form.Item>
@@ -242,4 +258,4 @@ const Judge = () => {
   );
 };
 
-export default Judge;
+export default Client;
