@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login, Notification,NfCalendar,LawyerSignup} from './pages';
+import { Login, Notification,NfCalendar} from './pages';
 import { ClientDashboard } from './userDashboard';
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/notifications" element={<Notification />} />
           <Route path="/dashboard" element={<ClientDashboard />} />
-          <Route path="/calendar" element={<LawyerSignup />} />
+          <Route path="/calendar" element={<NfCalendar />} />
         </Routes>
       </div>
     </BrowserRouter>
