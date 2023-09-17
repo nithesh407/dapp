@@ -4,7 +4,7 @@ import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-de
 
 const { Option } = Select;
 
-const Lawyer = () => {
+const LawyerSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
@@ -34,8 +34,8 @@ const Lawyer = () => {
     }
   };
   
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCourt, setSelectedCourt] = useState(null);
+  const [, setSelectedState] = useState(null);
+  const [, setSelectedCourt] = useState(null);
 
   const handleStateChange = (value) => {
     setSelectedState(value);
@@ -300,4 +300,4 @@ const Lawyer = () => {
   );
 };
 
-export default Lawyer;
+export default LawyerSignup;

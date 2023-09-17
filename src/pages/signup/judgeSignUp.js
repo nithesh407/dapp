@@ -4,7 +4,7 @@ import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-de
 
 const { Option } = Select;
 
-const Judge = () => {
+const JudgeSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
@@ -242,4 +242,4 @@ const Judge = () => {
   );
 };
 
-export default Judge;
+export default JudgeSignup;

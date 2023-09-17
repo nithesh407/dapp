@@ -4,7 +4,7 @@ import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-de
 
 const { Option } = Select;
 
-const Client = () => {
+const ClientSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
@@ -258,4 +258,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default ClientSignup;

@@ -1,8 +1,8 @@
-import Navbar from "./component";
+import { Login } from "./pages";
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Login />
     </div>
   );
 }
