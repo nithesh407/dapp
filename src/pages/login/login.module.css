@@ -16,10 +16,9 @@
   .button-container {
     position: relative;
   }
-  
-  
-  
-  
+  .login-button{
+    left: 10px;
+  }
   
   
   
