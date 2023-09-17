@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu,Layout } from 'antd';
-import styles from './navbar.module.css'
+import { Menu, Layout } from 'antd';
+import { useLocation } from 'react-router-dom'; // Import useLocation
+import styles from './navbar.module.css';
+import logo from '../../assets/profile.png';
+
 const { Header, Content } = Layout;
+
 const leftItems = [
-    {
-        label: 'Dapp',
-        key: 'dapp',
-        icon: <DashboardOutlined />,
-      },
+  {
+    label: 'Dapp',
+    key: 'dapp',
+    icon: <DashboardOutlined />,
+  },
   {
     label: 'Dashboard',
     key: 'dashboard',
@@ -43,14 +47,25 @@ const rightItems = [
     icon: <SettingOutlined />,
   },
   {
-    label: 'User',
-    key: 'user',
-    icon: <UserOutlined />,
+    key:'user',
+    icon: <img src={logo} height={30} width={30} style={{ marginTop: '5px', marginLeft: '10px' }} />,
   },
 ];
 
 const App = () => {
-  const [current, setCurrent] = useState('dapp');
+  const location = useLocation(); // Get the current location (URL)
+  const [current, setCurrent] = useState(getCurrentKeyFromLocation(location));
+
+  // Function to extract the key from the location pathname
+  function getCurrentKeyFromLocation(location) {
+    const path = location.pathname;
+    for (const item of leftItems.concat(rightItems)) {
+      if (path === '/' + item.key) {
+        return item.key;
+      }
+    }
+    return 'dapp'; // Default key if no match is found
+  }
 
   const onClick = (e) => {
     console.log('click ', e);
@@ -58,26 +73,22 @@ const App = () => {
   };
 
   return (
-
     <div className={styles['menu-container']} >
-     
-     <Menu style={{minWidth:1180}}   onClick={onClick} selectedKeys={[current]} mode="horizontal">
+      <Menu style={{ minWidth: 1180 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         {leftItems.map((item) => (
           <Menu.Item key={item.key} icon={item.icon}>
-            {item.label}
+            <a href={'/' + item.key}>{item.label}</a>
           </Menu.Item>
         ))}
       </Menu>
-      <Menu  style={{minWidth:350}} onClick={onClick} mode="horizontal">
+      <Menu style={{ minWidth: 350 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         {rightItems.map((item) => (
           <Menu.Item key={item.key} icon={item.icon}>
-            {item.label}
+            <a href={'/' + item.key}>{item.label}</a>
           </Menu.Item>
         ))}
       </Menu>
-     
     </div>
-    
   );
 };
 
