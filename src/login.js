@@ -56,6 +56,8 @@ const New1 = () => {
   };
 
   return (
+    <div>
+      <h1 style={{textAlign:"center",marginTop:"5%",fontFamily:"Dosis",position:"relative"}}>LOGIN</h1>
     <Form
       {...layout}
       form={form}
@@ -185,6 +187,8 @@ const New1 = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
+    
   );
 };
 export default New1;
