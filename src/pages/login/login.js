@@ -146,20 +146,20 @@ const Login = () => {
         }
         <Form.Item name="Mobile Number" class="button-container">
         {showHiddenBox && (
-        <div className="otp-container" style={{marginLeft:200,maxWidth:"100%"}}>
+        <div className="otp-container" style={{marginLeft:157,maxWidth:"100%"}}>
           <Form.Item name="OTP" label="OTP">
           <div style={{ display:"flex" }}>
             <div>
             <Input placeholder=" Enter OTP" style={{width:200}} />
             </div>
             <div>
-            <Button type="primary">Verify OTP</Button>
+            <Button type="primary" style={{left:50}}>Verify OTP</Button>
             </div>
           </div>
           </Form.Item>
         </div>
         )}
-        <div style={{display:"flex",marginLeft:"200px",justifyContent:"space-between"}}>
+        <div style={{display:"flex",marginLeft:"270px"}}>
         <div>
         <Button type="primary" onClick={() => setShowHiddenBox(!showHiddenBox)}  className="generate-otp-button">
         Generate OTP
