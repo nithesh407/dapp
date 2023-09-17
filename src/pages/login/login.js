@@ -144,36 +144,39 @@ const Login = () => {
             </Form.Item>
           ) : null
         }
-        <Form.Item name="Mobile Number" label="Mobile Number">
-          <Space.Compact style={{ width: '100%' }}>
-            <Input placeholder="Enter Mobile Number" />
-            <Button
-              type="primary"
-              onClick={() => setShowHiddenBox(!showHiddenBox)}
-            >
-              Generate OTP
-            </Button>
-          </Space.Compact>
-        </Form.Item>
+        <Form.Item name="Mobile Number" class="button-container">
         {showHiddenBox && (
-          <div>
-            <Form.Item name="OTP" label="OTP">
-          <Space.Compact style={{ width: '100%' }}>
-            <Input placeholder=" Enter OTP" />
-            <Button
-              type="primary"
-            >
-              Verify OTP
-            </Button>
-          </Space.Compact>
-        </Form.Item>
+        <div className="otp-container" style={{marginLeft:200,maxWidth:"100%"}}>
+          <Form.Item name="OTP" label="OTP">
+          <div style={{ display:"flex" }}>
+            <div>
+            <Input placeholder=" Enter OTP" style={{width:200}} />
+            </div>
+            <div>
+            <Button type="primary">Verify OTP</Button>
+            </div>
           </div>
+          </Form.Item>
+        </div>
         )}
-      </Form.Item>
-      <Form.Item {...tailLayout}>
+        <div style={{display:"flex",marginLeft:"200px",justifyContent:"space-between"}}>
+        <div>
+        <Button type="primary" onClick={() => setShowHiddenBox(!showHiddenBox)}  className="generate-otp-button">
+        Generate OTP
+        </Button>
+        </div>
+        <div>
         <Button type="primary" htmlType="submit" className={styles['login-button']}>
           Submit
         </Button>
+        </div>
+        </div>
+       
+        </Form.Item>
+
+      </Form.Item>
+      <Form.Item {...tailLayout}>
+        
       </Form.Item>
     </Form>
     </div>
