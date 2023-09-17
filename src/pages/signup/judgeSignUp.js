@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Avatar } from 'antd';
-import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined ,IdcardOutlined} from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -148,6 +148,24 @@ const JudgeSignup = () => {
             style={{ width: '100%' }}
           />
         </Form.Item>
+        <Form.Item
+  label="UID"
+  name="uid"
+  rules={[
+    { required: true, message: 'Please input your UID!' },
+    {
+      pattern: /^\d{12}$/,
+      message: 'UID must be exactly 12 digits!',
+    },
+  ]}
+  colon={false}
+>
+  <Input
+    prefix={<IdcardOutlined />}
+    style={{ width: '100%' }}
+  />
+</Form.Item>
+
 
         {/* Password Input */}
         <Form.Item
