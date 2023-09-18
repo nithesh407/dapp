@@ -5,4 +5,5 @@ import Login from "./login/login";
 import Notification from "./notification/notification";
 import NfCalendar from "./calender/calender";
 import ProfilePage from "./profile/profile";
-export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage};
+import LawyerDocument from "./documents/lawyerDocument";
+export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage,LawyerDocument};
