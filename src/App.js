@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup } from './pages';
+import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument } from './pages';
 import { ClientDashboard } from './userDashboard';
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
           <Route path='/SignUp/client' element={<ClientSignup/>}/>
           <Route path='/SignUp/judge' element={<JudgeSignup/>}/>
           <Route path='/SignUp/lawyer' element={<LawyerSignup/>}/>
+          <Route path="/document" element={<LawyerDocument />} />
         </Routes>
       </div>
     </BrowserRouter>
