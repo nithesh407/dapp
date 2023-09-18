@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu, Layout, Drawer, notification,List,Avatar,Popconfirm,Button, Popover} from 'antd';
+import { Menu, Layout, Drawer, notification,List,Avatar} from 'antd';
 import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
@@ -66,6 +66,10 @@ const rightItems = [
     label: 'Settings',
     key: 'settings',
     icon: <SettingOutlined />,
+  },
+  {
+    key: 'user',
+    icon: <img src={logo} height={30} width={30} style={{ marginTop: '5px', marginLeft: '10px' }} />,
   },
 ];
 

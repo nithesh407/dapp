@@ -9,42 +9,19 @@ const LawyerSignup = () => {
     console.log('Received values:', values);
   };
   
-  const [selectedBarID, setSelectedBarID] = useState('');
   const [selectedState1, setSelectedState1] = useState('');
   const [selectedCourt1, setSelectedCourt1] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
 
-  const handleBarIDChange = (value) => {
-    setSelectedBarID(value);
-    // Automatically fill the related fields based on the selected Bar ID
-    if (value === '21csr130') {
-      setSelectedState1('TamilNadu');
-      setSelectedCourt1('districtCourt');
-      setSelectedDistrict('Salem');
-    } else if (value === '21csr131') {
-      setSelectedState1('TamilNadu');
-      setSelectedCourt1('High court');
-      setSelectedDistrict('Nil');
-    } else if (value === '21csr132') {
-      setSelectedState1('Kerala');
-      setSelectedCourt1('districtCourt');
-      setSelectedDistrict('Kollam');
-    } else {
-      // Handle the case where the Bar ID doesn't match any predefined values
-    }
-  };
-  
-  const [, setSelectedState] = useState(null);
-  const [, setSelectedCourt] = useState(null);
-
   const handleStateChange = (value) => {
-    setSelectedState(value);
-    setSelectedCourt(null);
+    setSelectedState1(value);
+    setSelectedCourt1(null);
   };
 
   const handleCourtChange = (value) => {
-    setSelectedCourt(value);
+    setSelectedCourt1(value);
   };
+  
   const optionsData = {
     TamilNadu: [ "Ariyalur",
     "Chengalpattu",
@@ -216,79 +193,63 @@ const LawyerSignup = () => {
         </Form.Item>
       
         <Form.Item
-  label="Bar ID"
-  name="registration"
-  rules={[
-    { required: true, message: 'Please input your registration!' },
-    ({ getFieldValue }) => ({
-      validator(_, value) {
-        // Define the allowed values
-        const allowedValues = ["21csr130", "21csr131", "21csr132"];
-        if (allowedValues.includes(value)) {
-          // Set the selected values based on the Bar ID
-          handleBarIDChange(value);
-          return Promise.resolve();
-        }
-        return Promise.reject('User does not exist!');
-      },
-    }),
-  ]}
-  colon={false}
->
-  <Input style={{ width: '100%' }} />
-</Form.Item>
+          label="Bar ID"
+          name="barID"
+          rules={[
+            { required: true, message: 'Please input your Bar ID!' },
+          ]}
+          colon={false}
+        >
+          <Input
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
 
-{/* Conditional rendering for Select State */}
-{selectedBarID && (
-  <Form.Item label="Select State" colon={false}>
-    <Select
-      style={{ width: '100%' }}
-      placeholder="Select State"
-      onChange={handleStateChange}
-      value={selectedState1}
-    >
-      {Object.keys(optionsData).map((option) => (
-        <Option key={option} value={option}>
-          {option}
-        </Option>
-      ))}
-    </Select>
-  </Form.Item>
-)}
+        {/* Conditional rendering for Select State */}
+        <Form.Item label="Select State" colon={false}>
+          <Select
+            style={{ width: '100%' }}
+            placeholder="Select State"
+            onChange={handleStateChange}
+            value={selectedState1}
+          >
+            {Object.keys(optionsData).map((option) => (
+              <Option key={option} value={option}>
+                {option}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-{/* Conditional rendering for Select Court Type */}
-{selectedBarID && (
-  <Form.Item label="Select Court Type" colon={false}>
-    <Select
-      style={{ width: '100%' }}
-      placeholder="Select Court Type"
-      onChange={handleCourtChange}
-      value={selectedCourt1}
-    >
-      <Option value="highCourt">High Court</Option>
-      <Option value="districtCourt">District Court</Option>
-    </Select>
-  </Form.Item>
-)}
+        {/* Conditional rendering for Select Court Type */}
+        <Form.Item label="Select Court Type" colon={false}>
+          <Select
+            style={{ width: '100%' }}
+            placeholder="Select Court Type"
+            onChange={handleCourtChange}
+            value={selectedCourt1}
+          >
+            <Option value="highCourt">High Court</Option>
+            <Option value="districtCourt">District Court</Option>
+          </Select>
+        </Form.Item>
 
-{/* Conditional rendering for Display District Input */}
-{selectedBarID && selectedCourt1 === 'districtCourt' && (
-  <Form.Item label="Select District" colon={false}>
-    <Select
-      style={{ width: '100%' }}
-      placeholder="Select District"
-      value={selectedDistrict}
-    >
-      {selectedState1 && optionsData[selectedState1].map((value) => (
-        <Option key={value} value={value}>
-          {value}
-        </Option>
-      ))}
-    </Select>
-  </Form.Item>
-)}
-
-
+        {/* Conditional rendering for Display District Input */}
+        {selectedCourt1 === 'districtCourt' && (
+          <Form.Item label="Select District" colon={false}>
+            <Select
+              style={{ width: '100%' }}
+              placeholder="Select District"
+              value={selectedDistrict}
+            >
+              {selectedState1 && optionsData[selectedState1].map((value) => (
+                <Option key={value} value={value}>
+                  {value}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-100px' }}>

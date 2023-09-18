@@ -1,81 +1,15 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Select, Avatar } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Avatar } from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 
-const { Option } = Select;
 
 const ClientSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCourt, setSelectedCourt] = useState(null);
 
-  const handleStateChange = (value) => {
-    setSelectedState(value);
-    setSelectedCourt(null);
-  };
 
-  const handleCourtChange = (value) => {
-    setSelectedCourt(value);
-  };
-  const optionsData = {
-    TamilNadu: [ "Ariyalur",
-    "Chengalpattu",
-    "Chennai",
-    "Coimbatore",
-    "Cuddalore",
-    "Dharmapuri",
-    "Dindigul",
-    "Erode",
-    "Kallakurichi",
-    "Kanchipuram",
-    "Kanyakumari",
-    "Karur",
-    "Krishnagiri",
-    "Madurai",
-    "Mayiladuthurai",
-    "Nagapattinam",
-    "Namakkal",
-    "Nilgiris",
-    "Perambalur",
-    "Pudukkottai",
-    "Ramanathapuram",
-    "Ranipet",
-    "Salem",
-    "Sivaganga",
-    "Tenkasi",
-    "Thanjavur",
-    "Theni",
-    "Thoothukudi (Tuticorin)",
-    "Tiruchirappalli",
-    "Tirunelveli",
-    "Tirupathur",
-    "Tiruppur",
-    "Tiruvallur",
-    "Tiruvannamalai",
-    "Tiruvarur",
-    "Vellore",
-    "Viluppuram",
-    "Virudhunagar"],
-    Kerala:  [
-      "Alappuzha",
-      "Ernakulam",
-      "Idukki",
-      "Kannur",
-      "Kasaragod",
-      "Kollam",
-      "Kottayam",
-      "Kozhikode",
-      "Malappuram",
-      "Palakkad",
-      "Pathanamthitta",
-      "Thiruvananthapuram",
-      "Thrissur",
-      "Wayanad"
-  ]
-    // Add similar arrays for option3 to option20
-  };
+
 
 
   return (
@@ -205,48 +139,7 @@ const ClientSignup = () => {
             style={{ width: '100%' }}
           />
         </Form.Item>
-      {/* Select State */}
-      <Form.Item label="Select State" colon={false}>
-          <Select
-            style={{ width: '100%' }}
-            placeholder="Select State"
-            onChange={handleStateChange}
-            value={selectedState}
-          >
-            {Object.keys(optionsData).map((option) => (
-              <Option key={option} value={option}>
-                {option}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        {/* Select Court Type */}
-        <Form.Item label="Select Court Type" colon={false}>
-          <Select
-            style={{ width: '100%' }}
-            placeholder="Select Court Type"
-            onChange={handleCourtChange}
-            value={selectedCourt}
-          >
-            <Option value="highCourt">High Court</Option>
-            <Option value="districtCourt">District Court</Option>
-          </Select>
-        </Form.Item>
-
-        {/* Display District Input */}
-        <Form.Item label="Select District" colon={false}>
-          <Select
-            style={{ width: '100%' }}
-            placeholder="Select District"
-          >
-            {selectedState && optionsData[selectedState].map((value) => (
-              <Option key={value} value={value}>
-                {value}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+ 
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-100px' }}>

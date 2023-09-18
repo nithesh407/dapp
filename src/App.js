@@ -1,9 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
-import { Login, Notification } from './pages';
-import { Navbar } from './component';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Login, Notification,NfCalendar,ProfilePage } from './pages';
 import { ClientDashboard } from './userDashboard';
-import { NfCalendar } from './pages';
 
 function App() {
   return (
@@ -14,6 +12,8 @@ function App() {
           <Route path="/notifications" element={<Notification />} />
           <Route path="/dashboard" element={<ClientDashboard />} />
           <Route path="/calendar" element={<NfCalendar />} />
+          <Route path="/user" element={<ProfilePage />} />
+
         </Routes>
       </div>
     </BrowserRouter>
