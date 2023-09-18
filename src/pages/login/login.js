@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select, Space } from 'antd';
+import { Button, Form, Input, Select, Space,Modal ,Radio} from 'antd';
 import styles from './login.module.css'
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -17,9 +18,13 @@ const tailLayout = {
   },
 };
 const Login = () => {
+  const navigate= useNavigate();
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('client'); 
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
 
+  
   const onGenderChange = (value) => {
     switch (value) {
       case 'Lawyer':
@@ -45,8 +50,13 @@ const Login = () => {
     console.log(values);
   };
 
-
-
+  const handleOk = () => {
+    setOpen(false);
+    navigate('/Signup/'+selectedValue);
+  };
+  const onRadio = (e) => {
+    setSelectedValue(e.target.value);
+  };
 
 
   return (
@@ -144,7 +154,7 @@ const Login = () => {
             </Form.Item>
           ) : null
         }
-        <Form.Item name="Mobile Number" class="button-container">
+        <Form.Item name="Mobile Number" className="button-container">
         {showHiddenBox && (
         <div className="otp-container" style={{marginLeft:157,maxWidth:"100%"}}>
           <Form.Item name="OTP" label="OTP">
@@ -176,9 +186,29 @@ const Login = () => {
 
       </Form.Item>
       <Form.Item {...tailLayout}>
-        
+        <div style={{textAlign:"center"}}>
+        Are You a new User??
+      <Button type='link' onClick={() => setOpen(true)}>
+        Signup
+      </Button>
+      </div>
       </Form.Item>
     </Form>
+    
+    <Modal
+        title="SignUp"
+        centered
+        open={open}
+        onOk={handleOk}
+        onCancel={() => setOpen(false)}
+        footer={<Button key="submit" type="primary" onClick={handleOk}>Navigate</Button>}
+      >
+        <Radio.Group onChange={onRadio} size="large">
+      <Radio.Button value="client">Client</Radio.Button>
+      <Radio.Button value="lawyer">Lawyer</Radio.Button>
+      <Radio.Button value="judge">Judge</Radio.Button>
+    </Radio.Group>
+      </Modal>
     </div>
     
   );
