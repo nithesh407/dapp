@@ -114,7 +114,7 @@ const Nfcalendar = () => {
         onCancel={closeModal}
         footer={[
           <Button key="nestedModalButton" onClick={handleNestedModalClick}>
-            Open Nested Modal
+            Add Event
           </Button>,
           <Button key="close" onClick={closeModal}>
             Close
@@ -136,7 +136,7 @@ const Nfcalendar = () => {
         )}
       </Modal>
       <Modal
-        title="Nested Modal"
+        title="Event"
         centered
         open={nestedModalVisible}
         onCancel={closeNestedModal}
