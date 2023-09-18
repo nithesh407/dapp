@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu, Layout, Drawer, notification,List,Avatar} from 'antd';
+import { Menu, Layout, Drawer, notification,List,Avatar,Popconfirm,Button, Popover} from 'antd';
 import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
-
+import { ProfilePage } from '../../pages';
+import { click } from '@testing-library/user-event/dist/click';
 const { Header, Content } = Layout;
 
 const leftItems = [
@@ -65,10 +66,6 @@ const rightItems = [
     label: 'Settings',
     key: 'settings',
     icon: <SettingOutlined />,
-  },
-  {
-    key: 'user',
-    icon: <img src={logo} height={30} width={30} style={{ marginTop: '5px', marginLeft: '10px' }} />,
   },
 ];
 
@@ -144,6 +141,11 @@ const App = () => {
             <a href={'/' + item.key}>{item.label}</a>
           </Menu.Item>
         ))}
+        <Menu.Item >
+          <Popover placement="bottomRight" title="User" content={<ProfilePage/>} trigger="click" okText="Yes" cancelText="No" >
+        <Button style={{height:'100%',border:'0px'}}><img src={logo} height={30} width={30} /></Button>
+        </Popover>
+      </Menu.Item>
       </Menu>
       <Drawer
         title="Drawer Title"
