@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Navbar } from "../../component";
 import { Button, Menu, Dropdown,Avatar, Card ,Modal,Input,Select,DatePicker,message,Upload} from 'antd';
-import {DownOutlined,PlusOutlined,UploadOutlined } from '@ant-design/icons'
+import {DownOutlined,PlusOutlined,UploadOutlined,EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 const { Meta } = Card;
 const { Option } = Select;
@@ -140,6 +140,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -161,6 +166,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -182,6 +192,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -203,6 +218,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -230,6 +250,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -251,6 +276,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -272,6 +302,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
@@ -293,6 +328,11 @@ const menu = (
         src={folder}
       />
     }
+    actions={[
+      <SettingOutlined key="setting" />,
+      <EditOutlined key="edit" />,
+      <EllipsisOutlined key="ellipsis" />,
+    ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
