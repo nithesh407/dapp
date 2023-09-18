@@ -8,4 +8,5 @@ import ProfilePage from "./profile/profile";
 import LawyerDocument from "./documents/lawyerDocument";
 import ClientDocument from "./documents/clientDocument";
 import JudgeDocument from "./documents/judgeDocument";
-export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage,LawyerDocument,ClientDocument,JudgeDocument};
+import Collaborate from "./collaborate/collaborate";
+export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage,LawyerDocument,ClientDocument,JudgeDocument,Collaborate};

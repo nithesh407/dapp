@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument } from './pages';
+import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument,Collaborate } from './pages';
 import { LawyerDashboard } from './userDashboard';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
           <Route path="/lawyerdocument" element={<LawyerDocument />} />
           <Route path="/clientdocument" element={<ClientDocument />} />
           <Route path="/judgedocument" element={<JudgeDocument />} />
+          <Route path="/collaborate" element={<Collaborate />} />
         </Routes>
       </div>
     </BrowserRouter>
