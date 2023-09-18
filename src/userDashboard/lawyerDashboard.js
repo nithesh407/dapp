@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row,Avatar, Typography } from 'antd';
 import { Navbar } from '../component';
-import { UpcomingEvents,Statistics } from './lawyer';
+import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
+import Statistics from './Statistics/Statistics';
 const {Title} = Typography;
 const LawyerDashboard  = () => {
   const lawyerName = 'John Doe'; 

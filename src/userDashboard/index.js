@@ -1,3 +1,4 @@
-import ClientDashboard from "./client/ClientDashboard";
+import ClientDashboard from "./clientDashboard";
+import JudgeDashboard from "./judgeDashboard";
 import LawyerDashboard from "./lawyerDashboard";
-export {ClientDashboard,LawyerDashboard};
+export {ClientDashboard,JudgeDashboard,LawyerDashboard}
