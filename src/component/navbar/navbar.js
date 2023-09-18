@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu, Layout, Drawer, notification,List,Avatar,Popover,Button} from 'antd';
+import { Menu, Layout, Drawer, notification,List,Avatar,Popover,Button,Space,Collapse, Switch} from 'antd';
 import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
@@ -61,24 +61,17 @@ const data = [
     title: 'Ant Design Title 8',
   },
 ];
-const rightItems = [
-  {
-    label: 'Settings',
-    key: 'settings',
-    icon: <SettingOutlined />,
-  },
-];
 
 const App = () => {
   const location = useLocation();
   const [current, setCurrent] = useState(getCurrentKeyFromLocation(location));
   const [drawerVisible, setDrawerVisible] = useState(false);
-
+  const [settings,setSettingsVisible]=useState(false);
   const [api, contextHolder] = notification.useNotification();
 
   function getCurrentKeyFromLocation(location) {
     const path = location.pathname;
-    for (const item of leftItems.concat(rightItems)) {
+    for (const item of leftItems) {
       if (path === '/' + item.key) {
         return item.key;
       }
@@ -93,16 +86,14 @@ const App = () => {
   const showDrawer = () => {
     setDrawerVisible(true);
   };
-
   const onCloseDrawer = () => {
-    setDrawerVisible(false);
+    
   };
 
   const handleNotificationClick = () => {
     showDrawer();
     api.destroy('custom_notification');
   };
-
   useEffect(() => {
     const openNotification = () => {
       const key = 'custom_notification';
@@ -127,7 +118,7 @@ const App = () => {
 
   return (
     <div className={styles['menu-container']} >
-      <Menu style={{ minWidth: 1180 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
+      <Menu style={{ minWidth: 1180}} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         {leftItems.map((item) => (
           <Menu.Item key={item.key} icon={item.icon}>
             <a href={'/' + item.key}>{item.label}</a>
@@ -136,11 +127,7 @@ const App = () => {
       </Menu>
       <Menu style={{ minWidth: 350 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         <Menu.Item onClick={handleNotificationClick} icon={<BellOutlined/>}>Notification</Menu.Item>
-        {rightItems.map((item) => (
-          <Menu.Item key={item.key} icon={item.icon}>
-            <a href={'/' + item.key}>{item.label}</a>
-          </Menu.Item>
-        ))}
+        <Menu.Item onClick={()=>setSettingsVisible(true)} icon={<SettingOutlined/>}>Settings</Menu.Item>
         <Menu.Item >
           <Popover placement="bottomRight" title="User" content={<ProfilePage/>} trigger="click" okText="Yes" cancelText="No" >
         <Button style={{height:'100%',border:'0px'}}><img src={logo} height={30} width={30} /></Button>
@@ -148,10 +135,10 @@ const App = () => {
       </Menu.Item>
       </Menu>
       <Drawer
-        title="Drawer Title"
+        title="Notifications"
         placement="right"
-        onClose={onCloseDrawer}
-        visible={drawerVisible}
+        onClose={()=>setDrawerVisible(false)}
+        open={drawerVisible}
       >
         <List
     itemLayout="horizontal"
@@ -166,6 +153,40 @@ const App = () => {
       </List.Item>
     )}
   />
+      </Drawer>
+      <Drawer
+        title="Settings"
+        placement="left"
+        onClose={()=>setSettingsVisible(false)}
+        open={settings}
+        extra={
+          <Space>
+            <Button onClick={()=>setSettingsVisible(false)}>Cancel</Button>
+            <Button type="primary" onClick={()=>setSettingsVisible(false)}>
+              Save
+            </Button>
+          </Space>
+        }
+      >
+      <Collapse defaultActiveKey={['0']} ghost={true} items={[
+        {
+          key: '0',
+          label: 'Account',
+          children: <ProfilePage/>,
+          showArrow: false,
+        },
+  {
+    key: '1',
+    label: 'Dark Mode',
+    children: <Switch/>,
+    showArrow: false,
+  },
+  {
+    key: '2',
+    label: 'This is panel header with no arrow icon',
+    children: <p></p>,
+    showArrow: false,
+  },]} />
       </Drawer>
       {contextHolder}
     </div>
