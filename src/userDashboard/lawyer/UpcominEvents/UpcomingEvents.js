@@ -27,16 +27,16 @@ const eventsData = [
 
 const UpcomingEvents = () => {
   return (
-    <div>
+    <div style={{marginLeft:'200px'}}>
       <Title >Upcoming Events</Title>
 
-      <Row gutter={16}>
+      <Row gutter={10}>
         {eventsData.map((event, index) => (
           <Col span={5} key={index}>
             <Card
               
               hoverable
-              style={{ marginBottom: '16px', width: '300px',  height: '400px', marginBottom: '16px',}}
+              style={{ marginBottom: '16px',  height: '400px', marginBottom: '16px',}}
               cover={
                 <img
                   alt={event.title}

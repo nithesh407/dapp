@@ -4,16 +4,16 @@ import {
   FileTextOutlined,
   EditOutlined,
   UserAddOutlined,
-  EyeOutlined, 
+  EyeOutlined,
 } from '@ant-design/icons';
 
-const { Text ,Title} = Typography;
+const { Text } = Typography;
 
 const activityData = [
   {
     id: 1,
     type: 'file-upload',
-    description: 'Document "Legal Agreement.pdf" uploaded',
+    description: 'Document "Agreement.pdf" uploaded',
     timestamp: '2 hours ago',
   },
   {
@@ -25,23 +25,10 @@ const activityData = [
   {
     id: 3,
     type: 'collaboration-invitation',
-    description: 'Invitation from Judge Doe to collaborate on Case #54321',
+    description: 'Invitation from Judge ',
     timestamp: '2 days ago',
   },
 ];
-
-const getAvatar = (type) => {
-    switch (type) {
-      case 'file-upload':
-        return <Avatar icon={<FileTextOutlined />} />;
-      case 'case-update':
-        return <Avatar icon={<EditOutlined />} />;
-      case 'collaboration-invitation':
-        return <Avatar icon={<UserAddOutlined />} />;
-      default:
-        return null;
-    }
-  };
 
 const RecentActivity = () => {
   const handleNavigation = (activityId) => {
@@ -51,32 +38,45 @@ const RecentActivity = () => {
   };
 
   return (
-    <>
-    <Title>Recent Activity</Title>
-    <List
-      itemLayout="horizontal"
-      dataSource={activityData}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={getAvatar(item.type)}
-            title={
-              <Button
-                type="link"
-                icon={<EyeOutlined />}
-                onClick={() => handleNavigation(item.id)} // Handle navigation on click
-              >
-                {item.description}
-              </Button>
-            }
-            description={<Space><Text type="secondary">{item.timestamp}</Text></Space>}
-          />
-        </List.Item>
-      )}
-    />
-    </>
+    <div style={{ float: 'right', width: '300px', marginLeft: '20px' }}>
+      <h3>Recent Activity</h3>
+      <List
+        itemLayout="horizontal"
+        dataSource={activityData}
+        renderItem={(item) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={getAvatar(item.type)}
+              title={
+                <Button
+                  type="link"
+                  icon={<EyeOutlined />}
+                  onClick={() => handleNavigation(item.id)}
+                  style={{ wordWrap: 'break-word' }} // Force word wrapping
+                >
+                  {item.description}
+                </Button>
+              }
+              description={<Space><Text type="secondary">{item.timestamp}</Text></Space>}
+            />
+          </List.Item>
+        )}
+      />
+    </div>
   );
 };
 
+const getAvatar = (type) => {
+  switch (type) {
+    case 'file-upload':
+      return <Avatar icon={<FileTextOutlined />} />;
+    case 'case-update':
+      return <Avatar icon={<EditOutlined />} />;
+    case 'collaboration-invitation':
+      return <Avatar icon={<UserAddOutlined />} />;
+    default:
+      return null;
+  }
+};
 
 export default RecentActivity;
