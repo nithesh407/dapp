@@ -143,7 +143,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -169,7 +169,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -195,7 +195,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -221,7 +221,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -253,7 +253,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -279,7 +279,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -305,7 +305,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
@@ -331,7 +331,7 @@ const menu = (
     actions={[
       <SettingOutlined key="setting" />,
       <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
+      <UploadOutlined key="upload"/>,
     ]}
   >
     <Meta
