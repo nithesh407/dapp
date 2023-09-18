@@ -12,6 +12,7 @@ const Collaborate = () => {
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedCollaborator, setSelectedCollaborator] = useState(null); // To store the selected collaborator
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -23,7 +24,7 @@ const Collaborate = () => {
 
   const onChange = (value) => {
     // Handle selection change here
-    console.log(`selected ${value}`);
+    setSelectedCollaborator(value);
   };
 
   const onSearch = (value) => {
@@ -33,6 +34,8 @@ const Collaborate = () => {
 
   const filterOption = (input, option) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+ 
 
   return (
     <div>
@@ -80,12 +83,13 @@ const Collaborate = () => {
           </Option>
         </Select>
 
-        {/* Add a button inside the modal */}
-        <Col style={{ marginTop: '20px', textAlign: 'center' }}>
-          <Button onClick={() => console.log('Button Clicked')}>Click Me</Button>
-        </Col>
+       
+          <Button type="primary" onClick={handleAddCollaborator}>
+            Add Selected Collaborator
+          </Button>
+        
 
-        {/* You can place other content related to collaborators here */}
+     
       </Modal>
     </div>
   );

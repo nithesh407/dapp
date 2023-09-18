@@ -80,11 +80,6 @@ const Collaborate = () => {
           </Option>
         </Select>
 
-        {/* Add a button inside the modal */}
-        <Col style={{ marginTop: '20px', textAlign: 'center' }}>
-          <Button onClick={() => console.log('Button Clicked')}>Click Me</Button>
-        </Col>
-
         {/* You can place other content related to collaborators here */}
       </Modal>
     </div>
