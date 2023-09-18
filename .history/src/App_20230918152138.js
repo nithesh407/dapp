@@ -17,7 +17,7 @@ function App() {
           <Route path='/SignUp/judge' element={<JudgeSignup/>}/>
           <Route path='/SignUp/lawyer' element={<LawyerSignup/>}/>
           <Route path="/document" element={<LawyerDocument />} />
-          <Route path="/collaborate" element={<Collaborate />}/>
+          <Route path="/collaborate" element={<Collaborate/>/}
         </Routes>
       </div>
     </BrowserRouter>

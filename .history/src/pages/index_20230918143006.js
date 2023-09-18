@@ -7,4 +7,4 @@ import NfCalendar from "./calender/calender";
 import ProfilePage from "./profile/profile";
 import LawyerDocument from "./documents/lawyerDocument";
 import Collaborate from "./collaborate/collaborate";
-export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage,LawyerDocument,Collaborate};
+export {JudgeSignup,ClientSignup,LawyerSignup,Login,Notification,NfCalendar,ProfilePage,LawyerDocument};
