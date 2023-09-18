@@ -118,7 +118,7 @@ const Statistics = () => {
   return(
   <Row gutter={16}>
     <Col span={8}>
-      <Card  hoverable style={{width:'400px'}} onClick={showModal}>
+      <Card  hoverable bordered style={{width:'400px',border: 'solid lightgrey 2px'}} onClick={showModal}>
         <Statistic
           title="Active"
           value={11.28}
@@ -135,7 +135,7 @@ const Statistics = () => {
       </Modal>
     </Col>
     <Col span={8}>
-      <Card  hoverable style={{width:'400px'}} onClick={showModal}>
+      <Card bordered hoverable style={{width:'400px',border: 'solid lightgrey 2px'}} onClick={showModal}>
         <Statistic
           title="Completed"
           value={9.3}

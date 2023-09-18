@@ -32,15 +32,15 @@ const UpcomingEvents = () => {
 
       <Row gutter={10}>
         {eventsData.map((event, index) => (
-          <Col span={5} key={index}>
+          <Col span={6}  key={index}>
             <Card
               
               hoverable
-              style={{ marginBottom: '16px',  height: '400px',}}
+              style={{ marginBottom: '16px',  height: '400px',marginLeft:'20px'}}
               cover={
                 <img
                   alt={event.title}
-                  src={`https://via.placeholder.com/300x150?text=${event.title}`}
+                  src={`https://cache.careers360.mobi/media/article_images/2023/2/14/types-of-lawyers.webp`}
                 />
               }
             >
