@@ -4,7 +4,8 @@ import { Menu, Layout, Drawer, notification,List,Avatar} from 'antd';
 import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
-
+import { ProfilePage } from '../../pages';
+import { click } from '@testing-library/user-event/dist/click';
 const { Header, Content } = Layout;
 
 const leftItems = [
@@ -144,6 +145,11 @@ const App = () => {
             <a href={'/' + item.key}>{item.label}</a>
           </Menu.Item>
         ))}
+        <Menu.Item >
+          <Popover placement="bottomRight" title="User" content={<ProfilePage/>} trigger="click" okText="Yes" cancelText="No" >
+        <Button style={{height:'100%',border:'0px'}}><img src={logo} height={30} width={30} /></Button>
+        </Popover>
+      </Menu.Item>
       </Menu>
       <Drawer
         title="Drawer Title"
