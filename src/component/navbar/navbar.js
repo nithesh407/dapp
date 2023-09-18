@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu, Layout, Drawer, notification,List,Avatar,Popover,Button} from 'antd';
+import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, TeamOutlined } from '@ant-design/icons';
+import { Menu, Drawer, notification,List,Avatar,Popover,Button} from 'antd';
 import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
-import { click } from '@testing-library/user-event/dist/click';
-const { Header, Content } = Layout;
 
 const leftItems = [
   {
