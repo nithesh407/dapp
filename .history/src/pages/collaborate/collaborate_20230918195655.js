@@ -100,18 +100,19 @@ const Collaborate = () => {
           <Card>
             {/* Display the selected values and associated avatar images in the Card */}
             {selectedPeople.map((person, index) => (
-              <><div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 <img
                   src={avatarImages[person]}
                   alt={`${person} Avatar`}
-                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                />
                 <p style={{ flex: 1, marginRight: '10px' }}>{person}</p>
                 <Button
                   type="primary"
                   icon={<DeleteOutlined />}
-                  onClick={() => showDeleteConfirm(index)} />
-
-              </div><Divider /></>
+                  onClick={() => showDeleteConfirm(index)}
+                />
+              </div>
             ))}
            
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navbar } from '../../component';
-import { Row, Col, Button, Card, Typography, Modal, Select,Image,Divider } from 'antd';
+import { Row, Col, Button, Card, Typography, Modal, Select,Image } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Title,Paragraph } = Typography;
@@ -11,8 +11,8 @@ const Collaborate = () => {
     margin: '50px'
   };
   const channelstyle={
-    paddingLeft:'450px',
-    
+    paddingLeft:'600px',
+    paddingTop:'10px'
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -96,25 +96,23 @@ const Collaborate = () => {
               </Button>
             </Col>
           </Row>
-         
           <Card>
             {/* Display the selected values and associated avatar images in the Card */}
             {selectedPeople.map((person, index) => (
-              <><div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 <img
                   src={avatarImages[person]}
                   alt={`${person} Avatar`}
-                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                />
                 <p style={{ flex: 1, marginRight: '10px' }}>{person}</p>
                 <Button
                   type="primary"
                   icon={<DeleteOutlined />}
-                  onClick={() => showDeleteConfirm(index)} />
-
-              </div><Divider /></>
+                  onClick={() => showDeleteConfirm(index)}
+                />
+              </div>
             ))}
-           
-
             <Row gutter={16}>
       <Col>
         <Image
@@ -124,21 +122,21 @@ const Collaborate = () => {
           src="https://github.githubassets.com/images/modules/organizations/github_for_teams.png"
         />
       </Col>
-      <Col  >
+      <Col flex={1} span={3}>
        
           <Paragraph>
-            Create an Channel for Collaborators.
+            berb3
           </Paragraph>
-          </Col>
-      
+          </Col> 
+       
         <div style={channelstyle}>
-          <Button   
+          <Button style={{width}}  
             type="primary"          >
             Create an Channel
           </Button>
         </div>
-        
-      </Row>
+     
+    </Row>
           </Card>
         </Col>
       </Row>

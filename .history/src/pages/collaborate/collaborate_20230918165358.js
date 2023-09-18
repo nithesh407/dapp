@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Navbar } from '../../component';
-import { Row, Col, Button, Card, Typography, Modal, Select,Image,Divider } from 'antd';
+import { Row, Col, Button, Card, Typography, Modal, Select } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import avatarImages from 
 
-const { Title,Paragraph } = Typography;
+const { Title } = Typography;
 const { Option } = Select;
 
 const Collaborate = () => {
   const divstyle = {
     margin: '50px'
-  };
-  const channelstyle={
-    paddingLeft:'450px',
-    
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -76,9 +73,9 @@ const Collaborate = () => {
 
   // Define an object that maps person names to avatar image URLs
   const avatarImages = {
-    jack: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
-    lucy: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
-    tom: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
+    jack: 'https://example.com/jack-avatar.png',
+    lucy: 'https://example.com/lucy-avatar.png',
+    tom: 'https://example.com/tom-avatar.png',
   };
 
   return (
@@ -96,49 +93,26 @@ const Collaborate = () => {
               </Button>
             </Col>
           </Row>
-         
           <Card>
-            {/* Display the selected values and associated avatar images in the Card */}
-            {selectedPeople.map((person, index) => (
-              <><div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                <img
-                  src={avatarImages[person]}
-                  alt={`${person} Avatar`}
-                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
-                <p style={{ flex: 1, marginRight: '10px' }}>{person}</p>
-                <Button
-                  type="primary"
-                  icon={<DeleteOutlined />}
-                  onClick={() => showDeleteConfirm(index)} />
-
-              </div><Divider /></>
-            ))}
-           
-
-            <Row gutter={16}>
-      <Col>
-        <Image
-          width={60}
-          height={60}
-
-          src="https://github.githubassets.com/images/modules/organizations/github_for_teams.png"
-        />
-      </Col>
-      <Col  >
-       
-          <Paragraph>
-            Create an Channel for Collaborators.
-          </Paragraph>
-          </Col>
-      
-        <div style={channelstyle}>
-          <Button   
-            type="primary"          >
-            Create an Channel
-          </Button>
-        </div>
-        
-      </Row>
+            {/* Display the selected values and associated delete buttons in the same line */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {selectedPeople.map((person, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  {/* Render the avatar image based on the selected person */}
+                  <img
+                    src={avatarImages[person]}
+                    alt={`${person} Avatar`}
+                    style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+                  />
+                  <p style={{ flex: 1, marginRight: '10px' }}>{person}</p>
+                  <Button
+                    type="primary"
+                    icon={<DeleteOutlined />}
+                    onClick={() => showDeleteConfirm(index)}
+                  />
+                </div>
+              ))}
+            </div>
           </Card>
         </Col>
       </Row>
@@ -169,13 +143,13 @@ const Collaborate = () => {
           </Option>
           <Option value="lucy" label="Lucy">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={avatarImages.jack} alt="Lucy Avatar" style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: '10px' }} />
+              <img src={avatarImages.lucy} alt="Lucy Avatar" style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: '10px' }} />
               Lucy
             </div>
           </Option>
           <Option value="tom" label="Tom">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={avatarImages.jack} alt="Tom Avatar" style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: '10px' }} />
+              <img src={avatarImages.tom} alt="Tom Avatar" style={{ width: '20px', height: '20px', borderRadius: '50%', marginRight: '10px' }} />
               Tom
             </div>
           </Option>
@@ -184,11 +158,10 @@ const Collaborate = () => {
         {/* Add a button inside the modal to add the selected person */}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <Button
-          type='primary'
             onClick={handleButtonClick}
             disabled={!selectedPerson} // Disable the button if no person is selected
           >
-            Add Collaborative to this Case
+            Add Person
           </Button>
         </div>
       </Modal>
@@ -202,7 +175,6 @@ const Collaborate = () => {
       >
         Are you sure you want to delete this person?
       </Modal>
-      
     </div>
   );
 };
