@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Navbar } from "../../component";
 import { Button, Menu, Dropdown,Avatar, Card ,Modal,Input,Select,DatePicker,message,Upload} from 'antd';
-import {DownOutlined,PlusOutlined,UploadOutlined,EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons'
+import {DownOutlined,PlusOutlined,UploadOutlined,EditOutlined, SettingOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 const { Meta } = Card;
 const { Option } = Select;
@@ -36,7 +36,7 @@ const LawyerDocument =()=>{
     console.log(`selected ${value}`);
   }
   const [visible, setVisible] = useState(false);
-  const [startDate, setStartDate] = useState(null);
+  const [, setStartDate] = useState(null);
 
   const showModal = () => {
     setVisible(true);

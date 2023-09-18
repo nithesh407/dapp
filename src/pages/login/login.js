@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select, Space,Modal ,Radio} from 'antd';
+import { Button, Form, Input, Select,Modal ,Radio} from 'antd';
 import styles from './login.module.css'
 import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
