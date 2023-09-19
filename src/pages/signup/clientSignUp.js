@@ -142,7 +142,7 @@ const ClientSignup = () => {
  
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-100px' }}>
+          <Button type="primary" htmlType="submit" href='/dashboard' style={{ margin: '80px', marginTop: '-100px' }}>
             Register
           </Button>
         </Form.Item>

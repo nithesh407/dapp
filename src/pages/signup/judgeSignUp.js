@@ -251,7 +251,7 @@ const JudgeSignup = () => {
         )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-90px' }}>
+          <Button type="primary" htmlType="submit" href='/dashboard' style={{ margin: '80px', marginTop: '-90px' }}>
             Register
           </Button>
         </Form.Item>
