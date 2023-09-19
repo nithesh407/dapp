@@ -36,7 +36,7 @@ const UpcomingEvents = () => {
             <Card
               
               hoverable
-              style={{ marginBottom: '16px',  height: '400px',marginLeft:'20px'}}
+              style={{ marginBottom: '16px',  height: '400px',marginLeft:'20px',border:'2px solid lightgrey'}}
               cover={
                 <img
                   alt={event.title}
