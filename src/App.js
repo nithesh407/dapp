@@ -20,6 +20,7 @@ function App() {
           <Route path="/clientdocument" element={<ClientDocument />} />
           <Route path="/judgedocument" element={<JudgeDocument />} />
           <Route path="/collaborate" element={<Collaborate />} />
+          <Route path="/collaborate" element={<Collaborate />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select,Modal ,Radio} from 'antd';
+import { Button, Form, Input, Select,Modal ,Radio, message} from 'antd';
 import styles from './login.module.css'
 import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
@@ -57,7 +57,9 @@ const Login = () => {
   const onRadio = (e) => {
     setSelectedValue(e.target.value);
   };
-
+  const verify = ()=>{
+    message.success("opt verified")
+  }
 
   return (
     <div>
@@ -163,7 +165,7 @@ const Login = () => {
             <Input placeholder=" Enter OTP" style={{width:200}} />
             </div>
             <div>
-            <Button type="primary" style={{left:50}}>Verify OTP</Button>
+            <Button type="primary" onClick={verify} style={{left:50}}>Verify OTP</Button>
             </div>
           </div>
           </Form.Item>
