@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Select,Modal ,Radio, message} from 'antd';
 import styles from './login.module.css'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -23,7 +24,7 @@ const Login = () => {
   const [selectedValue, setSelectedValue] = useState('client'); 
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
-
+  const [otp, setOtp] = useState('');
   
   const onGenderChange = (value) => {
     switch (value) {
@@ -60,7 +61,18 @@ const Login = () => {
   const verify = ()=>{
     message.success("opt verified")
   }
-
+  const handleOTP = () => {
+    axios
+      .post('http://localhost:3002/generate-otp') // Make a POST request to your server
+      .then((response) => {
+        setOtp(response.data.otp);
+        message.success('OTP sent successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+        message.error('Failed to generate OTP');
+      });
+  };
   return (
     <div>
       <h1 className={styles['login-title']} >LOGIN</h1>
@@ -173,7 +185,7 @@ const Login = () => {
         )}
         <div style={{display:"flex",marginLeft:"270px"}}>
         <div>
-        <Button type="primary" onClick={() => setShowHiddenBox(!showHiddenBox)}  className="generate-otp-button">
+        <Button type="primary" onClick={handleOTP}  className="generate-otp-button">
         Generate OTP
         </Button>
         </div>
