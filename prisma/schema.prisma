@@ -6,6 +6,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+model Client {
+  id            Int      @id @default(autoincrement())
+  name          String
+  profile		String?
+  email         String   
+  mobileNumber  String
+  aadharNumber  String   @unique
+  password      String
+}
+
+model Judge {
+  id            Int      @id @default(autoincrement())
+  name          String
+  profile		String?
+  email         String   
+  mobileNumber  String
+  password      String
+  uid           String   @unique
+  state         String   
+  courtType     String   
+  district      String?  
+  }
+
+model Lawyer {
+  id            Int      @id @default(autoincrement())
+  name          String
+  profile		String?
+  email         String   
+  mobileNumber  String
+  password      String
+  bar           String   @unique
+  state         String   
+  courtType     String   
+  district      String?  
+  }
