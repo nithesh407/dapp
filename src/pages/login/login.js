@@ -66,6 +66,7 @@ const Login = () => {
       .post('http://localhost:3002/generate-otp') // Make a POST request to your server
       .then((response) => {
         setOtp(response.data.otp);
+        setShowHiddenBox(true);
         message.success('OTP sent successfully');
       })
       .catch((error) => {

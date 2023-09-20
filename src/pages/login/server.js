@@ -4,14 +4,14 @@ const app = express();
 const port = 3002;
 
 const accountSid = "AC67fc1e7fa5bd0b3904023d914937a044";
-const authToken = "074497fb12165de80a86bb2900eb4bbb";
+const authToken = "f55e115572a7ec82b0564f1e35f917fe";
 const verifySid = "VA59d6d0197c9cd5520335e61624d755ad";
 const twilioClient = twilio(accountSid, authToken);
 
 app.use(express.json());
 
 app.post('/generate-otp', (req, res) => {
-  const phoneNumber = '+917010340865'; // Replace with the actual phone number
+  const phoneNumber = '+919842752513'; // Replace with the actual phone number
 
   twilioClient.verify.v2.services(verifySid) // Use v2.services
     .verifications.create({ to: phoneNumber, channel: 'sms' })
