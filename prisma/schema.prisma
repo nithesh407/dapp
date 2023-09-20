@@ -10,11 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Client {
   id            Int      @id @default(autoincrement())
   name          String
-  profile		String?
+  profile		    String?
   email         String   
   mobileNumber  String
   aadharNumber  String   @unique
@@ -24,7 +23,7 @@ model Client {
 model Judge {
   id            Int      @id @default(autoincrement())
   name          String
-  profile		String?
+  profile		    String?
   email         String   
   mobileNumber  String
   password      String
@@ -37,7 +36,7 @@ model Judge {
 model Lawyer {
   id            Int      @id @default(autoincrement())
   name          String
-  profile		String?
+  profile		    String?
   email         String   
   mobileNumber  String
   password      String
@@ -45,4 +44,4 @@ model Lawyer {
   state         String   
   courtType     String   
   district      String?  
-  }
+  }  
