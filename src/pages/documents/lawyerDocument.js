@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "../../component";
-import { Button, Menu, Dropdown, Avatar, Card, Select, Tag } from 'antd';
+import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input } from 'antd';
 import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 import DocumentModal from "./DocumentModal";
@@ -38,9 +38,8 @@ const LawyerDocument = () => {
               }}
               cover={<img alt="example" src={folder} />}
               actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <UploadOutlined key="upload" />,
+                <Button onClick={handleSettingsClick}><SettingOutlined key="setting" /></Button>,
+      <Button onClick={handleEditClick}><EditOutlined key="edit" /></Button>,<UploadOutlined key="upload"/>
               ]}
             >
               <Meta
@@ -100,6 +99,47 @@ const LawyerDocument = () => {
     setData([...data, newElement]);
     
   };
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
+  const [description, setDescription] = useState("");
+  const handleSettingsClick = () => {
+    setSettingsVisible(true);
+  };
+
+  // Function to handle the "Edit" button click
+  const handleEditClick = () => {
+    setEditVisible(true);
+  };
+
+  // Function to handle the "Upload" button click
+
+
+  // Function to handle deleting a document
+  const handleDelete = () => {
+    // Implement your delete logic here
+    setSettingsVisible(false);
+    message.success("Document deleted successfully");
+  };
+
+  // Function to handle collaboration
+  const handleCollaborate = () => {
+    // Implement your collaboration logic here
+    setSettingsVisible(false);
+    message.success("Collaboration request sent");
+  };
+
+  // Function to handle saving edited description
+  const handleSaveEdit = () => {
+    // Implement your save edit logic here
+    setEditVisible(false);
+    message.success("Description updated successfully");
+  };
+
+  // Function to handle file upload
+ 
+
   function handleMenuClick(e) {
     console.log('click', e);
   }
@@ -127,7 +167,38 @@ const LawyerDocument = () => {
         </div>
         <div>{renderCards()}</div>
       </div>
+      <Modal
+        title="Settings"
+        visible={settingsVisible}
+        onCancel={() => setSettingsVisible(false)}
+        footer={[
+          <Button key="delete" type="primary" onClick={handleDelete}>
+            Delete
+          </Button>,
+          <Button key="collaborate" type="primary" onClick={handleCollaborate}>
+            Collaborate
+          </Button>,
+        ]}
+      >
+        {/* Settings modal content */}
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        title="Edit Description"
+        visible={editVisible}
+        onOk={handleSaveEdit}
+        onCancel={() => setEditVisible(false)}
+      >
+        <Input
+          placeholder="Enter Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </Modal>
+
     </div>
+    
   );
 };
 
