@@ -223,9 +223,17 @@ app.post('/Casedelete', async (req, res) => {
     const { casenumber } = req.body;
 
     const sql = `DELETE FROM Casename WHERE casenumber=?;`;
+    const sql1 = `DELETE FROM Casefile WHERE casenumber=?;`;
 
     const result = await new Promise((resolve, reject) => {
       db.query(sql, [casenumber], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+      db.query(sql1, [casenumber], (err, result) => {
         if (err) {
           reject(err);
         } else {

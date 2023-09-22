@@ -76,7 +76,7 @@ const App = () => {
         return item.key;
       }
     }
-    return 'dapp';
+    return 'dashboard';
   }
 
   const onClick = (e) => {
