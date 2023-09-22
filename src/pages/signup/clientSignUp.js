@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Avatar } from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-
+import axios from 'axios';
 
 const ClientSignup = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [aadharNumber, setAadharNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
+  const handleRegister = () => {
+    // Create an object with the values from your component's state
+    const formData = {
+      name: name,
+      email: email,
+      mobileNumber: parseInt(mobileNumber),
+      password: password,
+      aadharNumber:aadharNumber
+    };
 
-
-
+    // Send the POST request using Axios
+    axios.post('http://localhost:3003/submit-form', formData)
+      .then((response) => {
+        // Handle the response as needed
+        console.log('Response:', response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error('Error:', error);
+      });
+  };
 
 
   return (
@@ -45,6 +70,8 @@ const ClientSignup = () => {
           <Input
             prefix={<UserOutlined />}
             style={{ width: '100%' }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
 
@@ -61,6 +88,8 @@ const ClientSignup = () => {
           <Input
             prefix={<MailOutlined />}
             style={{ width: '100%' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
 
@@ -80,26 +109,31 @@ const ClientSignup = () => {
           <Input
             prefix={<PhoneOutlined />}
             style={{ width: '100%' }}
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
           />
         </Form.Item>
+
         {/* Aadhar Number Input */}
-<Form.Item
-  label="Aadhar Number"
-  name="aadharNumber"
-  rules={[
-    { required: true, message: 'Please input your Aadhar number!' },
-    {
-      pattern: /^\d{12}$/,
-      message: 'Invalid Aadhar number format! Aadhar number should be exactly 12 digits.',
-    },
-  ]}
-  colon={false}
->
-  <Input
-    prefix={<UserOutlined />}
-    style={{ width: '100%' }}
-  />
-</Form.Item>
+        <Form.Item
+          label="Aadhar Number"
+          name="aadharNumber"
+          rules={[
+            { required: true, message: 'Please input your Aadhar number!' },
+            {
+              pattern: /^\d{12}$/,
+              message: 'Invalid Aadhar number format! Aadhar number should be exactly 12 digits.',
+            },
+          ]}
+          colon={false}
+        >
+          <Input
+            prefix={<UserOutlined />}
+            style={{ width: '100%' }}
+            value={aadharNumber}
+            onChange={(e) => setAadharNumber(e.target.value)}
+          />
+        </Form.Item>
 
         {/* Password Input */}
         <Form.Item
@@ -113,6 +147,8 @@ const ClientSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
 
@@ -137,12 +173,13 @@ const ClientSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Item>
- 
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" href='/dashboard' style={{ margin: '80px', marginTop: '-100px' }}>
+          <Button onClick={handleRegister} type="primary" htmlType="submit"  style={{ margin: '80px', marginTop: '-100px' }}>
             Register
           </Button>
         </Form.Item>

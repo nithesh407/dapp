@@ -18,8 +18,8 @@ app.use(cors());
 const db = mysql.createConnection({
   host: 'localhost', // Change this to your MySQL host
   port: 3306, // Change this to your MySQL port
-  user: 'root', // Change this to your MySQL user
-  password: 'nithesh13631', // Change this to your MySQL password
+  user: 'nithil', // Change this to your MySQL user
+  password: 'password', // Change this to your MySQL password
   database: 'dapp', // Change this to your MySQL database name
 });
 

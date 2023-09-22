@@ -7,7 +7,7 @@ const cors = require('cors'); // Import the cors package
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3031; // Change the port to your desired port
+const port = process.env.PORT || 3003;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -32,16 +32,15 @@ db.connect((err) => {
   }
 });
 
-// Define a route for handling the POST request to /CaseFile
-app.post('/Casename', async (req, res) => {
+app.post('/submit-form', async (req, res) => {
   try {
-    const { casenumber, casename, casetype, startdate } = req.body;
+    const { name, email, mobileNumber, aadharNumber, password } = req.body;
 
-    const sql = `INSERT INTO Casename (casenumber, casename, casetype, startdate)
-                 VALUES (?, ?, ?, ?)`;
+    const sql = `INSERT INTO Client (name, email, mobileNumber, aadharNumber, password)
+                 VALUES (?, ?, ?, ?, ?)`;
 
     const result = await new Promise((resolve, reject) => {
-      db.query(sql, [casenumber, casename, casetype, startdate], (err, result) => {
+      db.query(sql, [name, email, mobileNumber, aadharNumber, password], (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -51,10 +50,10 @@ app.post('/Casename', async (req, res) => {
     });
 
     console.log('Data inserted into MySQL:', result);
-    res.status(200).json({ success: true, message: 'Data inserted successfully' });
+    res.status(200).json({ message: 'Data inserted successfully' });
   } catch (error) {
     console.error('MySQL query error:', error);
-    res.status(500).json({ success: false, error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

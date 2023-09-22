@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select,Modal ,Radio} from 'antd';
-import styles from './login.module.css'
+import { Button, Form, Input, Select, Modal, Radio, message } from 'antd';
+import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -19,12 +18,11 @@ const tailLayout = {
   },
 };
 const Login = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('client'); 
+  const [selectedValue, setSelectedValue] = useState(null);
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
-  const [setcookie, cookie]=useState("");
 
   
   const onGenderChange = (value) => {
@@ -49,7 +47,6 @@ const Login = () => {
         break;
       default:
     }
-    
   };
 
   const onFinish = (values) => {
@@ -58,88 +55,105 @@ const Login = () => {
 
   const handleOk = () => {
     setOpen(false);
-    navigate('/Signup/'+selectedValue);
+    navigate('/Signup/' + selectedValue);
   };
   const onRadio = (e) => {
     setSelectedValue(e.target.value);
   };
-  const handlesubmit=()=>{
-     Cookies.set("role",setcookie) 
-  }
-
-  return (
-    <div>
-      <h1 className={styles['login-title']} >LOGIN</h1>
-    <Form
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      className={styles['login-container']}
-    >
-      <Form.Item
-  name="Username"
-  label="Username"
-  rules={[
-    {
-      validator: (_, value) => {
-        if (!value || value.length === 0) {
-          return Promise.reject('Enter the username');
-        }
-        return Promise.resolve();
-      },
-    },
-  ]}
->
-  <Input placeholder="Enter Username" />
-</Form.Item>
-
-<Form.Item
-  label="Password"
-  name="password"
-  rules={[
-    {
-      validator: (_, value) => {
-        if (!value) {
-          return Promise.reject('Enter the password');
-        } else if (value.length === 10) {
-          return Promise.reject('Password cannot be exactly 10 characters long!');
-        }
-        return Promise.resolve();
-      },
-    },
-  ]}
->
-  <Input.Password placeholder="Enter Password" />
-</Form.Item>
 
 
-<Form.Item
-  name="Role"
-  label="Role"
-  rules={[
-    {
-      validator: (_, value) => {
-        if (!value || value.length === 0) {
-          return Promise.reject('Select a role');
-        }
-        return Promise.resolve();
-      },
-    },
-  ]}
->
-  <Select
-    placeholder="Select a role"
-    onChange={onGenderChange}
-    allowClear
-  >
-    <Option value="Lawyer">Lawyer</Option>
-    <Option value="Judge">Judge</Option>
-    <Option value="Client">Client</Option>
-    <Option value="Administrator">Administrator</Option>
-  </Select>
-</Form.Item>
+return (
+  <div>
+    {isLoggedIn ? (
+      // Render the dashboard component based on the selected role
+      role === 'Lawyer' ? (
+        <LawyerDashboard />
+      ) : role === 'Judge' ? (
+        <JudgeDashboard />
+      ) : (
+        <ClientDashboard />
+      )
+    ) : (
+      // Render the login form
+      <div>
+        <h1 className={styles['login-title']}>LOGIN</h1>
+        <Form
+          {...layout}
+          form={form}
+          name="login-form"
+          onFinish={onFinish}
+          className={styles['login-container']}
+        >
+        <Form.Item
+          name="Username"
+          label="Username"
+          rules={[
+            {
+              validator: (_, value) => {
+                if (!value || value.length === 0) {
+                  return Promise.reject('Enter the username');
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Input
+            placeholder="Enter Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Form.Item>
 
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              validator: (_, value) => {
+                if (!value) {
+                  return Promise.reject('Enter the password');
+                } else if (value.length === 16) {
+                  return Promise.reject('Password cannot be exactly 10 characters long!');
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Input.Password
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="Role"
+          label="Role"
+          rules={[
+            {
+              validator: (_, value) => {
+                if (!value || value.length === 0) {
+                  return Promise.reject('Select a role');
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Select
+            placeholder="Select a role"
+            onChange={onGenderChange}
+            allowClear
+            value={role}
+          >
+            <Option value="Lawyer">Lawyer</Option>
+            <Option value="Judge">Judge</Option>
+            <Option value="Client">Client</Option>
+            <Option value="Administrator">Administrator</Option>
+          </Select>
+        </Form.Item>
 
       <Form.Item
         noStyle
@@ -184,7 +198,7 @@ const Login = () => {
         </Button>
         </div>
         <div>
-        <Button type="primary" htmlType="submit" onClick={handlesubmit} className={styles['login-button']}>
+        <Button type="primary" htmlType="submit" className={styles['login-button']}>
           Submit
         </Button>
         </div>
@@ -192,18 +206,19 @@ const Login = () => {
        
         </Form.Item>
 
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <div style={{textAlign:"center"}}>
-        Are You a new User??
-      <Button type='link' onClick={() => setOpen(true)}>
-        Signup
-      </Button>
-      </div>
-      </Form.Item>
-    </Form>
-    
-    <Modal
+        </Form.Item>
+        <Form.Item {...tailLayout}>
+          <div style={{ textAlign: "center" }}>
+            Are You a new User??
+            <Button type='link' onClick={()=>setOpen(true)}>
+  Signup
+</Button>
+
+          </div>
+        </Form.Item>
+      </Form>
+
+      <Modal
         title="SignUp"
         centered
         open={open}
@@ -212,13 +227,15 @@ const Login = () => {
         footer={<Button key="submit" type="primary" onClick={handleOk}>Navigate</Button>}
       >
         <Radio.Group onChange={onRadio} size="large">
-      <Radio.Button value="client">Client</Radio.Button>
-      <Radio.Button value="lawyer">Lawyer</Radio.Button>
-      <Radio.Button value="judge">Judge</Radio.Button>
-    </Radio.Group>
+          <Radio.Button value="client">Client</Radio.Button>
+          <Radio.Button value="lawyer">Lawyer</Radio.Button>
+          <Radio.Button value="judge">Judge</Radio.Button>
+        </Radio.Group>
       </Modal>
     </div>
-    
+    )}
+    </div>
   );
 };
+
 export default Login;
