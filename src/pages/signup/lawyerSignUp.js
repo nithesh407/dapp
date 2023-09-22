@@ -1,27 +1,59 @@
+
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Avatar } from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-
+import axios from 'axios';
 const { Option } = Select;
 
 const LawyerSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
-  
-  const [selectedState1, setSelectedState1] = useState('');
-  const [selectedCourt1, setSelectedCourt1] = useState('');
-  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState(0);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [barID, setBarID] = useState(0);
+  const [selectedState, setSelectedState] = useState(''); // Initialize with an empty string or a default value
+const [selectedCourt, setSelectedCourt] = useState(''); // Initialize with an empty string or a default value
+ const [selectedDistrict, setSelectedDistrict] = useState('');
 
   const handleStateChange = (value) => {
-    setSelectedState1(value);
-    setSelectedCourt1(null);
+    setSelectedState(value);
+    setSelectedCourt(null);
+    console.log(selectedState);
   };
 
   const handleCourtChange = (value) => {
-    setSelectedCourt1(value);
+    setSelectedCourt(value);
+  };
+  const handleRegister = () => {
+    // Create an object with the values from your component's state
+    const formData = {
+      name: name,
+      email: email,
+      mobileNumber: parseInt(mobileNumber),
+      password: password,
+      barID: barID,
+      selectedState: selectedState,
+      selectedCourt: selectedCourt,
+      selectedDistrict: selectedDistrict,
+    };
+    console.log(formData,selectedState);
+    // Send the POST request using Axios
+    axios.post('http://localhost:3001/submit-form', formData)
+      .then((response) => {
+        // Handle the response as needed
+        console.log('Response:', response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error('Error:', error);
+      });
   };
   
+
   const optionsData = {
     TamilNadu: [ "Ariyalur",
     "Chengalpattu",
@@ -114,6 +146,8 @@ const LawyerSignup = () => {
           <Input
             prefix={<UserOutlined />}
             style={{ width: '100%' }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
 
@@ -130,6 +164,8 @@ const LawyerSignup = () => {
           <Input
             prefix={<MailOutlined />}
             style={{ width: '100%' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
 
@@ -149,9 +185,10 @@ const LawyerSignup = () => {
           <Input
             prefix={<PhoneOutlined />}
             style={{ width: '100%' }}
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
           />
         </Form.Item>
-       
 
         {/* Password Input */}
         <Form.Item
@@ -165,6 +202,8 @@ const LawyerSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
 
@@ -189,9 +228,11 @@ const LawyerSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Item>
-      
+
         <Form.Item
           label="Bar ID"
           name="barID"
@@ -202,6 +243,8 @@ const LawyerSignup = () => {
         >
           <Input
             style={{ width: '100%' }}
+            value={barID}
+            onChange={(e) => setBarID(e.target.value)}
           />
         </Form.Item>
 
@@ -210,8 +253,8 @@ const LawyerSignup = () => {
           <Select
             style={{ width: '100%' }}
             placeholder="Select State"
-            onChange={handleStateChange}
-            value={selectedState1}
+            onChange={handleStateChange} // This should correctly update selectedState
+            value={selectedState}
           >
             {Object.keys(optionsData).map((option) => (
               <Option key={option} value={option}>
@@ -226,8 +269,8 @@ const LawyerSignup = () => {
           <Select
             style={{ width: '100%' }}
             placeholder="Select Court Type"
-            onChange={handleCourtChange}
-            value={selectedCourt1}
+            onChange={handleCourtChange} // This should correctly update selectedState
+            value={selectedCourt}
           >
             <Option value="highCourt">High Court</Option>
             <Option value="districtCourt">District Court</Option>
@@ -235,14 +278,15 @@ const LawyerSignup = () => {
         </Form.Item>
 
         {/* Conditional rendering for Display District Input */}
-        {selectedCourt1 === 'districtCourt' && (
+        {selectedCourt === 'districtCourt' && (
           <Form.Item label="Select District" colon={false}>
             <Select
               style={{ width: '100%' }}
               placeholder="Select District"
               value={selectedDistrict}
+              onChange={(value) => setSelectedDistrict(value)}
             >
-              {selectedState1 && optionsData[selectedState1].map((value) => (
+              {selectedState && optionsData[selectedState].map((value) => (
                 <Option key={value} value={value}>
                   {value}
                 </Option>
@@ -252,13 +296,14 @@ const LawyerSignup = () => {
         )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" href='/dashboard' style={{ margin: '80px', marginTop: '-100px' }}>
+          <Button type="primary" onClick={handleRegister} htmlType="submit" style={{ margin: '80px', marginTop: '-100px' }}>
             Register
           </Button>
         </Form.Item>
       </Form>
     </div>
   );
+
 };
 
 export default LawyerSignup;

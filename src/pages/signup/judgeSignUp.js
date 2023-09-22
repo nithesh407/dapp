@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Select, Avatar } from 'antd';
-import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined ,IdcardOutlined} from '@ant-design/icons';
+import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined, IdcardOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -8,8 +9,17 @@ const JudgeSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [uid, setUid] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCourt, setSelectedCourt] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
 
   const handleStateChange = (value) => {
     setSelectedState(value);
@@ -19,46 +29,74 @@ const JudgeSignup = () => {
   const handleCourtChange = (value) => {
     setSelectedCourt(value);
   };
+
+  const handleRegister = () => {
+    // Create an object with the values from your component's state
+    const formData = {
+      name: name,
+      email: email,
+      mobileNumber: parseInt(mobileNumber),
+      uid: uid,
+      password: password,
+      selectedState: selectedState,
+      selectedCourt: selectedCourt,
+      selectedDistrict: selectedDistrict,
+    };
+
+    // Send the POST request using Axios
+    axios.post('http://localhost:3002/submit-form', formData)
+      .then((response) => {
+        // Handle the response as needed
+        console.log('Response:', response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error('Error:', error);
+      });
+  };
+
   const optionsData = {
-    TamilNadu: [ "Ariyalur",
-    "Chengalpattu",
-    "Chennai",
-    "Coimbatore",
-    "Cuddalore",
-    "Dharmapuri",
-    "Dindigul",
-    "Erode",
-    "Kallakurichi",
-    "Kanchipuram",
-    "Kanyakumari",
-    "Karur",
-    "Krishnagiri",
-    "Madurai",
-    "Mayiladuthurai",
-    "Nagapattinam",
-    "Namakkal",
-    "Nilgiris",
-    "Perambalur",
-    "Pudukkottai",
-    "Ramanathapuram",
-    "Ranipet",
-    "Salem",
-    "Sivaganga",
-    "Tenkasi",
-    "Thanjavur",
-    "Theni",
-    "Thoothukudi (Tuticorin)",
-    "Tiruchirappalli",
-    "Tirunelveli",
-    "Tirupathur",
-    "Tiruppur",
-    "Tiruvallur",
-    "Tiruvannamalai",
-    "Tiruvarur",
-    "Vellore",
-    "Viluppuram",
-    "Virudhunagar"],
-    Kerala:  [
+    TamilNadu: [
+      "Ariyalur",
+      "Chengalpattu",
+      "Chennai",
+      "Coimbatore",
+      "Cuddalore",
+      "Dharmapuri",
+      "Dindigul",
+      "Erode",
+      "Kallakurichi",
+      "Kanchipuram",
+      "Kanyakumari",
+      "Karur",
+      "Krishnagiri",
+      "Madurai",
+      "Mayiladuthurai",
+      "Nagapattinam",
+      "Namakkal",
+      "Nilgiris",
+      "Perambalur",
+      "Pudukkottai",
+      "Ramanathapuram",
+      "Ranipet",
+      "Salem",
+      "Sivaganga",
+      "Tenkasi",
+      "Thanjavur",
+      "Theni",
+      "Thoothukudi (Tuticorin)",
+      "Tiruchirappalli",
+      "Tirunelveli",
+      "Tirupathur",
+      "Tiruppur",
+      "Tiruvallur",
+      "Tiruvannamalai",
+      "Tiruvarur",
+      "Vellore",
+      "Viluppuram",
+      "Virudhunagar"
+    ],
+    Kerala: [
       "Alappuzha",
       "Ernakulam",
       "Idukki",
@@ -73,10 +111,9 @@ const JudgeSignup = () => {
       "Thiruvananthapuram",
       "Thrissur",
       "Wayanad"
-  ]
+    ]
     // Add similar arrays for option3 to option20
   };
-
 
   return (
     <div
@@ -111,6 +148,8 @@ const JudgeSignup = () => {
           <Input
             prefix={<UserOutlined />}
             style={{ width: '100%' }}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
 
@@ -127,6 +166,8 @@ const JudgeSignup = () => {
           <Input
             prefix={<MailOutlined />}
             style={{ width: '100%' }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
 
@@ -146,26 +187,27 @@ const JudgeSignup = () => {
           <Input
             prefix={<PhoneOutlined />}
             style={{ width: '100%' }}
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
           />
         </Form.Item>
-        <Form.Item
-  label="UID"
-  name="uid"
-  rules={[
-    { required: true, message: 'Please input your UID!' },
-    {
-      pattern: /^\d{12}$/,
-      message: 'UID must be exactly 12 digits!',
-    },
-  ]}
-  colon={false}
->
-  <Input
-    prefix={<IdcardOutlined />}
-    style={{ width: '100%' }}
-  />
-</Form.Item>
 
+        <Form.Item
+          label="UID"
+          name="uid"
+          rules={[
+            { required: true, message: 'Please input your UID!' },
+            
+          ]}
+          colon={false}
+        >
+          <Input
+            prefix={<IdcardOutlined />}
+            style={{ width: '100%' }}
+            value={uid}
+            onChange={(e) => setUid(e.target.value)}
+          />
+        </Form.Item>
 
         {/* Password Input */}
         <Form.Item
@@ -179,6 +221,8 @@ const JudgeSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
 
@@ -203,6 +247,8 @@ const JudgeSignup = () => {
           <Input.Password
             prefix={<LockOutlined />}
             style={{ width: '100%' }}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Item>
 
@@ -238,8 +284,8 @@ const JudgeSignup = () => {
             <Select
               style={{ width: '100%' }}
               placeholder="Select District"
-              
-              
+              onChange={(value) => setSelectedDistrict(value)}
+              value={selectedDistrict}
             >
               {optionsData[selectedState].map((value) => (
                 <Option key={value} value={value}>
@@ -251,7 +297,7 @@ const JudgeSignup = () => {
         )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" href='/dashboard' style={{ margin: '80px', marginTop: '-90px' }}>
+          <Button onClick={handleRegister} type="primary" htmlType="submit" style={{ margin: '80px', marginTop: '-90px' }}>
             Register
           </Button>
         </Form.Item>
