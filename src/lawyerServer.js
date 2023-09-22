@@ -7,7 +7,7 @@ const cors = require('cors'); // Import the cors package
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3012;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
