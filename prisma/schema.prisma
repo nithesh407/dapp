@@ -45,3 +45,19 @@ model Lawyer {
   courtType     String   
   district      String?  
   }  
+
+model Casename {
+  id            Int      @id @default(autoincrement())
+  casename      String
+  casenumber    String   @unique
+  casetype      String
+  startdate     String
+  }    
+
+model Casefile{
+  id            Int      @id @default(autoincrement())
+  casename      String
+  casenumber    String
+  cid           String   @unique
+  filename      String
+}  
