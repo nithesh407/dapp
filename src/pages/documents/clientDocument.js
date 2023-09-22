@@ -82,7 +82,7 @@ const ClientDocument = () => {
           />
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap' ,gap:30,marginLeft:50,marginRight:50,marginTop:50 }}>
+        <div style={{ display: 'grid', margin: '30px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
           {filteredCards.map(caseItem => (
             <div key={caseItem.id} style={{ width: '300px', marginBottom: 20}}>
               <Card

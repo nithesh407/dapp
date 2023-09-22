@@ -44,7 +44,7 @@ const JudgeSignup = () => {
     };
 
     // Send the POST request using Axios
-    axios.post('http://localhost:3002/submit-form', formData)
+    axios.post('http://localhost:3010/judge-submit', formData)
       .then((response) => {
         // Handle the response as needed
         console.log('Response:', response.data);

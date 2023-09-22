@@ -42,7 +42,7 @@ const [selectedCourt, setSelectedCourt] = useState(''); // Initialize with an em
     };
     console.log(formData,selectedState);
     // Send the POST request using Axios
-    axios.post('http://localhost:3012/submit-form', formData)
+    axios.post('http://localhost:3010/lawyer-submit', formData)
       .then((response) => {
         // Handle the response as needed
         console.log('Response:', response.data);

@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "../../component";
-import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input } from 'antd';
-import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
+import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input,Popconfirm } from 'antd';
+import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined,DeleteOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 import DocumentModal from "./DocumentModal";
 import axios from "axios";
 const { Meta } = Card;
 const { Option } = Select;
 
-const initialData = [
-  {
-    caseNumber: 'Case 1',
-    startDate: '2023-09-21',
-    tags: ['Tag1', 'Tag2'],
-    title: 'Card title 1',
-    imageUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
-  },
-];
+// const initialData = [
+//   {
+//     caseNumber: 'Case 1',
+//     startDate: '2023-09-21',
+//     tags: ['Tag1', 'Tag2'],
+//     title: 'Card title 1',
+//     imageUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
+//   },
+// ];
+
+
+const cancel = (e) => {
+  console.log(e);
+  message.error('Click on No');
+};
+
+
+
 
 const LawyerDocument = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     console.log(data,typeof(data))
-    axios.post('http://localhost:3032/Caseretrieve')
+    axios.post('http://localhost:3010/Caseretrieve')
       .then(response => {
         if (response.data.success === true) {
           console.log(JSON.stringify(response.data.data));
@@ -37,8 +46,20 @@ const LawyerDocument = () => {
         }
       });
   }, []);
-  
+  const handleDelete = (caseNumber) => {
+    axios.post('http://localhost:3010/Casedelete', { casenumber:caseNumber})
+    .then(response => {
+      if (response.data.success === true) {
+        message.success("Case deleted successfully");
+        window.location.reload();
+      } else {
+        console.error('Folder create failed:', response.data.errorMessage);
+        message.error("Case not deleted");
+      }
+    });
+  };
   const renderCards = () => {
+
     return (
       <div style={{ display: 'grid', margin: '30px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
         {data.slice().reverse().map((cardData, index) => (
@@ -49,7 +70,16 @@ const LawyerDocument = () => {
               }}
               cover={<img alt="example" src={folder} />}
               actions={[
-                <Button onClick={handleSettingsClick}><SettingOutlined key="setting" /></Button>,
+                <Popconfirm
+                  title="Delete the task"
+                  description="Are you sure to delete this task?"
+                  onConfirm={handleDelete.bind(null, cardData.caseNumber)}
+                  onCancel={cancel}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button danger ><DeleteOutlined /></Button>
+                </Popconfirm>,<Button  onClick={handleSettingsClick}><SettingOutlined key="setting" /></Button>,
       <Button onClick={handleEditClick}><EditOutlined key="edit" /></Button>,<UploadOutlined key="upload"/>
               ]}
             >
@@ -128,11 +158,6 @@ const LawyerDocument = () => {
 
 
   // Function to handle deleting a document
-  const handleDelete = () => {
-    // Implement your delete logic here
-    setSettingsVisible(false);
-    message.success("Document deleted successfully");
-  };
 
   // Function to handle collaboration
   const handleCollaborate = () => {
@@ -183,9 +208,6 @@ const LawyerDocument = () => {
         visible={settingsVisible}
         onCancel={() => setSettingsVisible(false)}
         footer={[
-          <Button key="delete" type="primary" onClick={handleDelete}>
-            Delete
-          </Button>,
           <Button key="collaborate" type="primary" onClick={handleCollaborate}>
             Collaborate
           </Button>,

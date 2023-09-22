@@ -1,77 +1,15 @@
 import React, { useState } from 'react';
-import { Badge, Calendar, Modal ,Button,Input,Radio, List} from 'antd';
+import { Badge, Calendar, Modal, Button, Input, Radio, List } from 'antd';
 import { Navbar } from '../../component';
-import {UnorderedListOutlined} from '@ant-design/icons';
-const getListData = (value) => {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event for 8th day.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event for 8th day.',
-        },
-      ];
-      break;
-    case 10:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event for 10th day.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event for 10th day.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event for 10th day.',
-        },
-      ];
-      break;
-    case 15:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event for 15th day',
-        },
-        {
-          type: 'success',
-          content: 'This is very long usual event for 15th day......',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 1 for 15th day.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 2 for 15th day.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 3 for 15th day.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 4 for 15th day.',
-        },
-      ];
-      break;
-    default:
-      // Handle other days if needed
-      break;
-  }
-  return listData || [];
-};
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 const Nfcalendar = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [nestedModalVisible, setNestedModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [eventText, setEventText] = useState('');
+  const [selectedRadioValue, setSelectedRadioValue] = useState('success');
+  const [events, setEvents] = useState({}); // State variable to store events
 
   const handleDateClick = (value) => {
     setSelectedDate(value);
@@ -89,13 +27,52 @@ const Nfcalendar = () => {
   const closeNestedModal = () => {
     setNestedModalVisible(false);
   };
+
+  const handleAddEvent = () => {
+    if (selectedDate) {
+      // Get the events for the selected date or create an empty array
+      const dateKey = selectedDate.format('YYYY-MM-DD');
+      const dateEvents = events[dateKey] || [];
+      const newItem = {
+        type: selectedRadioValue,
+        content: eventText,
+      };
+      // Add the new event to the array of events for the selected date
+      dateEvents.push(newItem);
+      // Update the events state with the new events
+      setEvents({
+        ...events,
+        [dateKey]: dateEvents,
+      });
+      setEventText('');
+      setSelectedRadioValue('success');
+    }
+    closeNestedModal();
+  };
+
+  const handleRemoveEvent = (dateKey, eventIndex) => {
+    const dateEvents = events[dateKey] || [];
+    // Remove the event at the specified index
+    dateEvents.splice(eventIndex, 1);
+    // Update the events state
+    setEvents({
+      ...events,
+      [dateKey]: dateEvents,
+    });
+  };
+
   function onChange(e) {
-    console.log(`radio checked:${e.target.value}`);
+    console.log(`radio checked: ${e.target.value}`);
+    setSelectedRadioValue(e.target.value);
   }
+
   const dateCellRender = (value) => {
+    const dateKey = value.format('YYYY-MM-DD');
+    const dateEvents = events[dateKey] || [];
+
     return (
       <div onClick={() => handleDateClick(value)} className="date-cell" style={{ height: '70px' }}>
-        {getListData(value).map((item, index) => (
+        {dateEvents.map((item, index) => (
           <Badge key={index} status={item.type} text={item.content} />
         ))}
       </div>
@@ -125,10 +102,16 @@ const Nfcalendar = () => {
           <div>
             <p>Date: {selectedDate.format('YYYY-MM-DD')}</p>
             <List className="events">
-              {getListData(selectedDate).map((item, index) => (
+              {events[selectedDate.format('YYYY-MM-DD')]?.map((item, index) => (
                 <List.Item key={index}>
                   <Badge status={item.type} text={item.content} />
-                  <Button type="danger" style={{backgroundColor:'#ff4d4f',color:'#ffffff'}}>Remove</Button>
+                  <Button
+                    type="danger"
+                    style={{ backgroundColor: '#ff4d4f', color: '#ffffff' }}
+                    onClick={() => handleRemoveEvent(selectedDate.format('YYYY-MM-DD'), index)}
+                  >
+                    Remove
+                  </Button>
                 </List.Item>
               ))}
             </List>
@@ -144,29 +127,29 @@ const Nfcalendar = () => {
           <Button key="closeNested" onClick={closeNestedModal}>
             Close
           </Button>,
-          <Button key="submit" type='primary'>
-          Submit
-        </Button>
-        ]
-      }
+          <Button key="submit" type="primary" onClick={handleAddEvent}>
+            Add
+          </Button>,
+        ]}
       >
         <Input
-      placeholder="Enter the event"
-      prefix={<UnorderedListOutlined />}
+          placeholder="Enter the event"
+          prefix={<UnorderedListOutlined />}
+          value={eventText}
+          onChange={(e) => setEventText(e.target.value)} // Update the eventText state
         />
-        <br/>
-        <br/>
+        <br />
+        <br />
         <div>
-      <Radio.Group onChange={onChange} defaultValue="success">
-        <Radio.Button value="success">Low</Radio.Button>
-        <Radio.Button value="warning">Intermediate</Radio.Button>
-        <Radio.Button value="error">High</Radio.Button>
-      </Radio.Group>
-    </div>
+          <Radio.Group onChange={onChange} defaultValue="success" value={selectedRadioValue}>
+            <Radio.Button value="success">Low</Radio.Button>
+            <Radio.Button value="warning">Intermediate</Radio.Button>
+            <Radio.Button value="error">High</Radio.Button>
+          </Radio.Group>
+        </div>
       </Modal>
     </>
   );
 };
-
 
 export default Nfcalendar;

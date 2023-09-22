@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Select, Modal, Radio, message } from 'antd';
 import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import LawyerDashboard from '../../userDashboard/lawyerDashboard';
+import ClientDashboard from '../../userDashboard/clientDashboard';
+import JudgeDashboard from '../../userDashboard/judgeDashboard';
+import Cookies from 'js-cookie';
+
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -23,30 +29,36 @@ const Login = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
+
+
+  // State variables for input fields
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [role, setRole] = useState('');
+
   const onGenderChange = (value) => {
     switch (value) {
       case 'Lawyer':
         form.setFieldsValue({
           note: 'Hi, Lawyer!',
         });
-        cookie("Lawyer")
         break;
       case 'Judge':
         form.setFieldsValue({
           note: 'Hi, Judge!',
         });
-        cookie("Judge")
         break;
       case 'Client':
         form.setFieldsValue({
           note: 'Hi there!',
         });
-        cookie("Client")
         break;
       default:
     }
+    setRole(value);
   };
 
   const onFinish = (values) => {
@@ -60,6 +72,48 @@ const Login = () => {
   const onRadio = (e) => {
     setSelectedValue(e.target.value);
   };
+  const handleSubmit = () => {
+  axios
+    .post('http://localhost:3010/login-form', {
+      username: username,
+      password: password,
+      role: role,
+    })
+    .then((response) => {
+      // Handle the response as needed
+      console.log('Response:', response.data);
+      message.success('Login success');
+      // const history = useHistory();
+      if (response.data.success===true){
+        Cookies.set('role',role)
+        switch (role) {
+          case 'Lawyer':
+            
+            navigate('/dashboard')
+            break;
+          case 'Judge':
+            navigate('/dashboard')
+            break;
+          case 'Client':
+            navigate('/dashboard')
+            break;
+          default:
+            // Handle other roles or scenarios
+            break;
+        }
+        setIsLoggedIn(true);
+      }
+      // Determine the route based on the user's role
+      
+      // Set isLoggedIn to true upon successful login
+      
+    })
+    .catch((error) => {
+      // Handle errors
+      console.error('Error:', error);
+      message.error('Login Error');
+    });
+};
 
 
 return (
@@ -155,56 +209,61 @@ return (
           </Select>
         </Form.Item>
 
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) =>
-          prevValues.gender !== currentValues.gender
-        }
-      >
-        {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
-            <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          ) : null
-        }
-        <Form.Item name="Mobile Number" className="button-container">
-        {showHiddenBox && (
-        <div className="otp-container" style={{marginLeft:157,maxWidth:"100%"}}>
-          <Form.Item name="OTP" label="OTP">
-          <div style={{ display:"flex" }}>
-            <div>
-            <Input placeholder=" Enter OTP" style={{width:200}} />
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.gender !== currentValues.gender
+          }
+        >
+          {({ getFieldValue }) =>
+            getFieldValue('gender') === 'other' ? (
+              <Form.Item
+                name="customizeGender"
+                label="Customize Gender"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            ) : null
+          }
+          <Form.Item name="Mobile Number" className="button-container">
+            {showHiddenBox && (
+              <div className="otp-container" style={{ marginLeft: 157, maxWidth: "100%" }}>
+                <Form.Item name="OTP" label="OTP">
+                  <div style={{ display: "flex" }}>
+                    <div>
+                      <Input
+                        placeholder=" Enter OTP"
+                        style={{ width: 200 }}
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <Button type="primary" style={{ left: 50 }}>Verify OTP</Button>
+                    </div>
+                  </div>
+                </Form.Item>
+              </div>
+            )}
+            <div style={{ display: "flex", marginLeft: "270px" }}>
+              <div>
+                <Button type="primary" onClick={() => setShowHiddenBox(!showHiddenBox)} className="generate-otp-button">
+                  Generate OTP
+                </Button>
+              </div>
+              <div>
+                <Button onClick={handleSubmit}type="primary" htmlType="submit" className={styles['login-button']}>
+                  Submit
+                </Button>
+              </div>
             </div>
-            <div>
-            <Button type="primary" style={{left:50}}>Verify OTP</Button>
-            </div>
-          </div>
+
           </Form.Item>
-        </div>
-        )}
-        <div style={{display:"flex",marginLeft:"270px"}}>
-        <div>
-        <Button type="primary" onClick={() => setShowHiddenBox(!showHiddenBox)}  className="generate-otp-button">
-        Generate OTP
-        </Button>
-        </div>
-        <div>
-        <Button type="primary" htmlType="submit" className={styles['login-button']}>
-          Submit
-        </Button>
-        </div>
-        </div>
-       
-        </Form.Item>
 
         </Form.Item>
         <Form.Item {...tailLayout}>

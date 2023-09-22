@@ -22,7 +22,7 @@ const DocumentModal = ({ children, onFormData }) => {
 
   const handleUpload = (cid,filename) => {
     // Handle the upload logic here
-    axios.post('http://localhost:3030/Casefile', { caseNumber:caseNumber, caseName: caseName,filename:filename,cid:cid })
+    axios.post('http://localhost:3010/Casefile', { caseNumber:caseNumber, caseName: caseName,filename:filename,cid:cid })
   .then(response => {
     if (response.data.success === true) {
       console.log('File uploaded with CID:', cid);
@@ -73,7 +73,7 @@ const DocumentModal = ({ children, onFormData }) => {
   };
 
   const handleOk = () => {
-    axios.post('http://localhost:3031/Casename', { casenumber:caseNumber, casename: caseName,casetype:JSON.stringify(tags),startdate:JSON.stringify(date)})
+    axios.post('http://localhost:3010/Casename', { casenumber:caseNumber, casename: caseName,casetype:JSON.stringify(tags),startdate:JSON.stringify(date)})
   .then(response => {
     if (response.data.success === true) {
       message.success(caseName + ' Folder created successfully');
