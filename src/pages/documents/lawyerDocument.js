@@ -4,6 +4,7 @@ import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input }
 import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 import DocumentModal from "./DocumentModal";
+import axios from "axios";
 const { Meta } = Card;
 const { Option } = Select;
 
@@ -15,18 +16,28 @@ const initialData = [
     title: 'Card title 1',
     imageUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
   },
-  {
-    caseNumber: 'Case 2',
-    startDate: '2023-09-22',
-    tags: ['Tag3', 'Tag4'],
-    title: 'Card title 2',
-    imageUrl: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
-  },
 ];
 
 const LawyerDocument = () => {
-  const [data, setData] = useState(initialData);
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    console.log(data,typeof(data))
+    axios.post('http://localhost:3032/Caseretrieve')
+      .then(response => {
+        if (response.data.success === true) {
+          console.log(JSON.stringify(response.data.data));
+          if (Array.isArray(response.data.data)) {
+            console.log('it is an array', response.data.data);
+            setData(response.data.data);
+          } else {
+            console.error('Data retrieved is not an array:', response.data.data);
+          }
+        } else {
+          console.error('Folder create failed:', response.data.errorMessage);
+        }
+      });
+  }, []);
+  
   const renderCards = () => {
     return (
       <div style={{ display: 'grid', margin: '30px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
@@ -48,7 +59,7 @@ const LawyerDocument = () => {
                 description={
                   <div>
                     Case Number: {cardData.caseNumber}<br />
-                    Start Date: {cardData.startDate}<br />
+                    Start Date : {cardData.startDate.replace(/"/g, '')}<br/>
                     {cardData.tags.map((tag, index) => (<Tag key={index}>{tag}</Tag>))}
                   </div>
                 }

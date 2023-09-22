@@ -3,7 +3,7 @@ import { Modal, Input, Select, DatePicker, Upload, Button, message } from "antd"
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { create } from 'ipfs-http-client';
 import FileDownload from "./FileDownload";
-
+import axios from "axios";
 const { Option } = Select;
 
 const DocumentModal = ({ children, onFormData }) => {
@@ -20,17 +20,18 @@ const DocumentModal = ({ children, onFormData }) => {
     setVisible(false);
   };
 
-  const handleUpload = (cid) => {
+  const handleUpload = (cid,filename) => {
     // Handle the upload logic here
-    console.log('File uploaded with CID:', cid);
-    message.success('File uploaded successfully');
-    // Clear the form fields after upload
-    setCaseName('');
-    setCaseNumber('');
-    setTags([]);
-    setFileList([]);
-    setDate(null);
-  };
+    axios.post('http://localhost:3030/Casefile', { caseNumber:caseNumber, caseName: caseName,filename:filename,cid:cid })
+  .then(response => {
+    if (response.data.success === true) {
+      console.log('File uploaded with CID:', cid);
+      message.success(filename + ' File uploaded successfully');
+    } else {
+      console.error('File upload failed:', response.data.errorMessage);
+    }
+  });
+}
 
   const showModal = () => {
     setVisible(true);
@@ -54,12 +55,14 @@ const DocumentModal = ({ children, onFormData }) => {
       // Loop through the fileList array to process each selected file
       for (const fileItem of fileList) {
         const file = fileItem.originFileObj;
+        const filename=fileItem.name;
+        console.log(filename);
         const fileContent = await file.arrayBuffer();
         const content = new Uint8Array(fileContent);
         const result = await ipfs.add({ content });
 
         setCID(result.cid.toString());
-        handleUpload(result.cid.toString());
+        handleUpload(result.cid.toString(),filename);
       }
 
       // Clear the fileList after uploading
@@ -70,6 +73,14 @@ const DocumentModal = ({ children, onFormData }) => {
   };
 
   const handleOk = () => {
+    axios.post('http://localhost:3031/Casename', { casenumber:caseNumber, casename: caseName,casetype:JSON.stringify(tags),startdate:JSON.stringify(date)})
+  .then(response => {
+    if (response.data.success === true) {
+      message.success(caseName + ' Folder created successfully');
+    } else {
+      console.error('Folder create failed:', response.data.errorMessage);
+    }
+  });
     const formData = {
       caseName,
       caseNumber,
@@ -78,6 +89,7 @@ const DocumentModal = ({ children, onFormData }) => {
       cid,
     };
     console.log(formData);
+    
     // Call the onFormData prop with the form data
     onFormData(formData);
 
