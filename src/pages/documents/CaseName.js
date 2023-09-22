@@ -19,7 +19,7 @@ const db = mysql.createConnection({
   host: 'localhost', // Change this to your MySQL host
   port: 3306, // Change this to your MySQL port
   user: 'root', // Change this to your MySQL user
-  password: 'password', // Change this to your MySQL password
+  password: 'nithesh13631', // Change this to your MySQL password
   database: 'dapp', // Change this to your MySQL database name
 });
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Select,Modal ,Radio} from 'antd';
 import styles from './login.module.css'
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -23,6 +24,7 @@ const Login = () => {
   const [selectedValue, setSelectedValue] = useState('client'); 
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
+  const [setcookie, cookie]=useState("");
 
   
   const onGenderChange = (value) => {
@@ -31,19 +33,23 @@ const Login = () => {
         form.setFieldsValue({
           note: 'Hi, Lawyer!',
         });
+        cookie("Lawyer")
         break;
       case 'Judge':
         form.setFieldsValue({
           note: 'Hi, Judge!',
         });
+        cookie("Judge")
         break;
       case 'Client':
         form.setFieldsValue({
           note: 'Hi there!',
         });
+        cookie("Client")
         break;
       default:
     }
+    
   };
 
   const onFinish = (values) => {
@@ -57,7 +63,9 @@ const Login = () => {
   const onRadio = (e) => {
     setSelectedValue(e.target.value);
   };
-
+  const handlesubmit=()=>{
+     Cookies.set("role",setcookie) 
+  }
 
   return (
     <div>
@@ -176,7 +184,7 @@ const Login = () => {
         </Button>
         </div>
         <div>
-        <Button type="primary" htmlType="submit" className={styles['login-button']}>
+        <Button type="primary" htmlType="submit" onClick={handlesubmit} className={styles['login-button']}>
           Submit
         </Button>
         </div>
