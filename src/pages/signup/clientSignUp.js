@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Avatar } from 'antd';
+import { Form, Input, Button, Avatar ,message} from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const ClientSignup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +14,7 @@ const ClientSignup = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
   };
+  const navigate=useNavigate();
   const handleRegister = () => {
     // Create an object with the values from your component's state
     const formData = {
@@ -28,6 +29,13 @@ const ClientSignup = () => {
     axios.post('http://localhost:3010/client-submit', formData)
       .then((response) => {
         // Handle the response as needed
+        if(response.data.success === true){
+          navigate('/');
+          message.success('Registered successful')
+        }
+        else{
+          message.error("Not registered")
+        }
         console.log('Response:', response.data);
       })
       .catch((error) => {

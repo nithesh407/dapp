@@ -81,10 +81,10 @@ app.post('/lawyer-submit', async (req, res) => {
     });
 
     console.log('Data inserted into MySQL:', result);
-    res.status(200).json({ message: 'Data inserted successfully' });
+    res.status(200).json({success:true, message: 'Data inserted successfully' });
   } catch (error) {
     console.error('MySQL query error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({success:false, error: 'Internal server error' });
   }
 });
 
@@ -106,10 +106,10 @@ app.post('/judge-submit', async (req, res) => {
     });
 
     console.log('Data inserted into MySQL:', result);
-    res.status(200).json({ message: 'Data inserted successfully' });
+    res.status(200).json({success:true, message: 'Data inserted successfully' });
   } catch (error) {
     console.error('MySQL query error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({success:false, error: 'Internal server error' });
   }
 });
 
@@ -131,10 +131,10 @@ app.post('/client-submit', async (req, res) => {
     });
 
     console.log('Data inserted into MySQL:', result);
-    res.status(200).json({ message: 'Data inserted successfully' });
+    res.status(200).json({success:true, message: 'Data inserted successfully' });
   } catch (error) {
     console.error('MySQL query error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({success:false, error: 'Internal server error' });
   }
 });
 

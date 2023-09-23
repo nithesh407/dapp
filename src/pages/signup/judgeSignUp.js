@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Select, Avatar } from 'antd';
+import { Form, Input, Button, Select, Avatar,message } from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined, IdcardOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 const JudgeSignup = () => {
@@ -29,7 +29,7 @@ const JudgeSignup = () => {
   const handleCourtChange = (value) => {
     setSelectedCourt(value);
   };
-
+  const navigate=useNavigate()
   const handleRegister = () => {
     // Create an object with the values from your component's state
     const formData = {
@@ -47,6 +47,13 @@ const JudgeSignup = () => {
     axios.post('http://localhost:3010/judge-submit', formData)
       .then((response) => {
         // Handle the response as needed
+        if(response.data.success === true){
+          navigate('/');
+          message.success('Registered successful')
+        }
+        else{
+          message.error("Not registered")
+        }
         console.log('Response:', response.data);
       })
       .catch((error) => {

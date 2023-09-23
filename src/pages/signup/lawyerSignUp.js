@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { Form, Input, Button, Select, Avatar } from 'antd';
+import { Form, Input, Button, Select, Avatar, message } from 'antd';
 import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 const LawyerSignup = () => {
@@ -28,6 +29,7 @@ const [selectedCourt, setSelectedCourt] = useState(''); // Initialize with an em
   const handleCourtChange = (value) => {
     setSelectedCourt(value);
   };
+  const navigate=useNavigate()
   const handleRegister = () => {
     // Create an object with the values from your component's state
     const formData = {
@@ -42,9 +44,17 @@ const [selectedCourt, setSelectedCourt] = useState(''); // Initialize with an em
     };
     console.log(formData,selectedState);
     // Send the POST request using Axios
+    
     axios.post('http://localhost:3010/lawyer-submit', formData)
       .then((response) => {
         // Handle the response as needed
+        if(response.data.success === true){
+          navigate('/');
+          message.success('Registered successful')
+        }
+        else{
+          message.error("Not registered")
+        }
         console.log('Response:', response.data);
       })
       .catch((error) => {
@@ -111,7 +121,6 @@ const [selectedCourt, setSelectedCourt] = useState(''); // Initialize with an em
   ]
     // Add similar arrays for option3 to option20
   };
-
 
   return (
     <div

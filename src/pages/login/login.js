@@ -85,11 +85,12 @@ const Login = () => {
     .then((response) => {
       // Handle the response as needed
       console.log('Response:', response.data);
-      message.success('Login success');
+      
       // const history = useHistory();
       if (response.data.success===true){
         Cookies.set('name',username)
         Cookies.set('email',email)
+        message.success('Login success');
       
         Cookies.set('role',role)
         switch (role) {
@@ -107,7 +108,11 @@ const Login = () => {
             // Handle other roles or scenarios
             break;
         }
+
         setIsLoggedIn(true);
+      }
+      else{
+        message.error('Login Unsuccessful');
       }
       // Determine the route based on the user's role
       

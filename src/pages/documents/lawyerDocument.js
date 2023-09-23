@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../component";
 import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input,Popconfirm } from 'antd';
 import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined,DeleteOutlined } from '@ant-design/icons'
@@ -140,6 +141,7 @@ const LawyerDocument = () => {
     setData([...data, newElement]);
     
   };
+  const navigate=useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCards, setFilteredCards] = useState([]);
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -163,7 +165,8 @@ const LawyerDocument = () => {
   const handleCollaborate = () => {
     // Implement your collaboration logic here
     setSettingsVisible(false);
-    message.success("Collaboration request sent");
+    navigate('/collaborate');
+    
   };
 
   // Function to handle saving edited description
