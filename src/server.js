@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -8,7 +8,6 @@ const port = process.env.PORT || 3010;
 
 app.use(cors());
 app.use(bodyParser.json());
-
 // MySQL database connection configuration
 const db = mysql.createConnection({
   host: 'localhost',
@@ -17,7 +16,6 @@ const db = mysql.createConnection({
   database: 'dapp',
 });
 
-// Connect to MySQL
 db.connect((err) => {
   if (err) {
     console.error('MySQL connection error:', err);

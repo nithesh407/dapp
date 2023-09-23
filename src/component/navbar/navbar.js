@@ -5,8 +5,7 @@ import { useLocation } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
-import { click } from '@testing-library/user-event/dist/click';
-const { Header, Content } = Layout;
+
 
 const leftItems = [
   {

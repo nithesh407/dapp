@@ -38,6 +38,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [role, setRole] = useState('');
+  const [email,setEmail]=useState('');
 
   const onGenderChange = (value) => {
     switch (value) {
@@ -72,6 +73,8 @@ const Login = () => {
   const onRadio = (e) => {
     setSelectedValue(e.target.value);
   };
+
+
   const handleSubmit = () => {
   axios
     .post('http://localhost:3010/login-form', {
@@ -85,6 +88,9 @@ const Login = () => {
       message.success('Login success');
       // const history = useHistory();
       if (response.data.success===true){
+        Cookies.set('name',username)
+        Cookies.set('email',email)
+      
         Cookies.set('role',role)
         switch (role) {
           case 'Lawyer':
@@ -138,6 +144,7 @@ return (
           onFinish={onFinish}
           className={styles['login-container']}
         >
+        
         <Form.Item
           name="Username"
           label="Username"
@@ -156,6 +163,26 @@ return (
             placeholder="Enter Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item
+          name="Email"
+          label="Email"
+          rules={[
+            {
+              validator: (_, value) => {
+                if (!value || value.length === 0) {
+                  return Promise.reject('Enter the Email');
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Input
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
 

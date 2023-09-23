@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Card, Button, Modal, Form, Input, message, Upload } from 'antd';
 import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
-
+import Cookies from 'js-cookie';
 const { Meta } = Card;
 
 const ProfilePage = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [name, setName] = useState('Enter name');
-  const [email, setEmail] = useState('user@gmail.com');
-  const [pno, setPno] = useState('enter your no');
+  const [name, setName] = useState(Cookies.get('name'));
+  const [email, setEmail] = useState(Cookies.get('email'));
+
   const [avatar, setAvatar] = useState(null); // To store the selected avatar image
   const [isButtonHovered, setIsButtonHovered] = useState(false);
 
@@ -42,14 +42,6 @@ const ProfilePage = () => {
     }
   };
 
-  const validateMobileNumber = (rule, value, callback) => {
-    const mobilePattern = /^\d{10}$/;
-    if (!value || mobilePattern.test(value)) {
-      callback();
-    } else {
-      callback('Invalid mobile number format (should be 10 digits)');
-    }
-  };
 
   const [form] = Form.useForm(); // Create a form instance
 
@@ -137,8 +129,7 @@ const ProfilePage = () => {
             </Button>
           </Upload>
         </div>
-        <div style={{marginTop:'40px'}}><Meta title={name} description={email} />
-        <Meta description={pno} /></div>
+        <div style={{marginTop:'40px'}}><Meta title={name} description={email} /></div>
         
       </Card>
 
@@ -166,16 +157,7 @@ const ProfilePage = () => {
           >
             <Input value={email} onChange={(e) => setEmail(e.target.value)} />
           </Form.Item>
-          <Form.Item
-            label="Mobile no"
-            name="pno"
-            rules={[
-              { required: true, message: 'Please enter your mobile number' },
-              { validator: validateMobileNumber },
-            ]}
-          >
-            <Input value={pno} onChange={(e) => setPno(e.target.value)} />
-          </Form.Item>
+          
         </Form>
       </Modal>
     </div>
