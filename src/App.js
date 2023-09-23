@@ -1,8 +1,9 @@
-import React from 'react';
+import { useEffect,useState }from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument,Collaborate } from './pages';
+import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument,Collaborate} from './pages';
 import { LawyerDashboard } from './userDashboard';
 import Cookies from 'js-cookie';
+import { ConfigProvider,theme } from 'antd';
 
 const ConditionalRoute = () => {
   const cookie=Cookies.get('role');
@@ -17,10 +18,33 @@ const ConditionalRoute = () => {
 };
 
 function App() {
-  
+  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    const storedDarkMode = localStorage.getItem('darkMode');
+    if (storedDarkMode === 'true') {
+      setDarkMode(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  }, []);
+
+  // Effect to update CSS theme based on darkMode state
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
   return (
+    <div
+      style={{
+        background: darkMode ? 'black' : 'white',
+        height: 'calc(100vh - 40px)',
+      }}
+    >
+      <ConfigProvider
+        theme={{
+          algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        }}
+      >
     <BrowserRouter>
-      <div className="App">
+    <div className={`App ${darkMode ? 'dark-mode' : 'light-mode'}`}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/notifications" element={<Notification />} />
@@ -35,6 +59,8 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    </ConfigProvider>
+    </div>
   );
 }
 

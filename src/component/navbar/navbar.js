@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
 import { Menu, Layout, Drawer, notification,List,Avatar,Popover,Button,Space,Collapse, Switch} from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
@@ -68,6 +68,16 @@ const App = () => {
   const [settings,setSettingsVisible]=useState(false);
   const [api, contextHolder] = notification.useNotification();
 
+  const initialDarkMode = localStorage.getItem('darkMode') === 'true';
+  const [darkMode, setDarkMode] = useState(initialDarkMode);
+  const navigate= useNavigate()
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
+    document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
+    window.location.reload();
+  };
   function getCurrentKeyFromLocation(location) {
     const path = location.pathname;
     for (const item of leftItems) {
@@ -119,9 +129,9 @@ const App = () => {
     <div className={styles['menu-container']} >
       <Menu style={{ minWidth: 1180}} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         {leftItems.map((item) => (
-          <Menu.Item key={item.key} icon={item.icon}>
-            <a href={'/' + item.key}>{item.label}</a>
-          </Menu.Item>
+          <Menu.Item  key={item.key} onClick={()=>{navigate('/'+item.key)}} icon={item.icon}>
+          {item.label}
+        </Menu.Item>
         ))}
       </Menu>
       <Menu style={{ minWidth: 350 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
@@ -175,9 +185,12 @@ const App = () => {
           showArrow: false,
         },
   {
-    key: '1',
-    label: 'Dark Mode',
-    children: <Switch/>,
+    key: '1',label: 'Dark Mode',
+    children: <Switch
+    checked={darkMode}
+    onChange={toggleDarkMode}
+    style={{ marginLeft: 8 }}
+  />,
     showArrow: false,
   },
   {

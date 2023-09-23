@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Card, Button, Modal, Form, Input, message, Upload } from 'antd';
 import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 const { Meta } = Card;
 
 const ProfilePage = () => {
@@ -11,7 +13,7 @@ const ProfilePage = () => {
 
   const [avatar, setAvatar] = useState(null); // To store the selected avatar image
   const [isButtonHovered, setIsButtonHovered] = useState(false);
-
+  const navigate=useNavigate()
   const handleEditClick = () => {
     setIsEditModalVisible(true);
   };
@@ -32,6 +34,9 @@ const ProfilePage = () => {
   const handleEditModalCancel = () => {
     setIsEditModalVisible(false);
   };
+  const backtoLogin=()=>{
+      navigate('/')
+  }
 
   const validateEmail = (rule, value, callback) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -66,7 +71,7 @@ const ProfilePage = () => {
       <Card
         style={{ width: 300 }}
         actions={[
-          <Button type="default" style={{ backgroundColor: 'red', color: 'white' }}>
+          <Button type="default" onClick={backtoLogin} style={{ backgroundColor: 'red', color: 'white' }}>
             Logout
           </Button>,
           <Button
