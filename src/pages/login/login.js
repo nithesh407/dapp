@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Select, Modal, Radio, message } from 'antd';
 import styles from './login.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LawyerDashboard from '../../userDashboard/lawyerDashboard';
 import ClientDashboard from '../../userDashboard/clientDashboard';
 import JudgeDashboard from '../../userDashboard/judgeDashboard';
 import Cookies from 'js-cookie';
-
+import {useAuth} from '../../Authenticate';
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -30,7 +30,7 @@ const Login = () => {
   const [form] = Form.useForm();
   const [showHiddenBox, setShowHiddenBox] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const { isAuthenticated, login } = useAuth();
 
 
   // State variables for input fields
@@ -85,14 +85,9 @@ const Login = () => {
     .then((response) => {
       // Handle the response as needed
       console.log('Response:', response.data);
-      
-      // const history = useHistory();
       if (response.data.success===true){
-        Cookies.set('name',username)
-        Cookies.set('email',email)
         message.success('Login success');
-      
-        Cookies.set('role',role)
+        login(email,role,username);
         switch (role) {
           case 'Lawyer':
             
@@ -126,7 +121,9 @@ const Login = () => {
     });
 };
 
-
+if (isAuthenticated) {
+  return <Navigate to={"/dashboard"} replace />
+}
 return (
   <div>
     {isLoggedIn ? (

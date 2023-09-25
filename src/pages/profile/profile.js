@@ -3,14 +3,14 @@ import { Card, Button, Modal, Form, Input, message, Upload } from 'antd';
 import { EditOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../../Authenticate';
 const { Meta } = Card;
 
 const ProfilePage = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [name, setName] = useState(Cookies.get('name'));
+  const [name, setName] = useState(Cookies.get('username'));
   const [email, setEmail] = useState(Cookies.get('email'));
-
+  const { logout } = useAuth();
   const [avatar, setAvatar] = useState(null); // To store the selected avatar image
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const navigate=useNavigate()
@@ -35,7 +35,8 @@ const ProfilePage = () => {
     setIsEditModalVisible(false);
   };
   const backtoLogin=()=>{
-      navigate('/')
+      logout();
+      window.location.reload();
   }
 
   const validateEmail = (rule, value, callback) => {

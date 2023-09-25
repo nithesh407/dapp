@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../component";
-import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input,Popconfirm } from 'antd';
+import { Button, Menu, Dropdown, Avatar, Card, Select, Tag,message,Modal,Input,Popconfirm,Empty } from 'antd';
 import { DownOutlined, PlusOutlined, UploadOutlined, EditOutlined, SettingOutlined,DeleteOutlined } from '@ant-design/icons'
 import folder from "../../assets/folder.png"
 import DocumentModal from "./DocumentModal";
@@ -62,7 +62,10 @@ const LawyerDocument = () => {
   const renderCards = () => {
 
     return (
+      (data.length===0)?<>
+      <Empty style={{marginTop:'160px'}} image={Empty.PRESENTED_IMAGE_SIMPLE}/></>:
       <div style={{ display: 'grid', margin: '30px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        
         {data.slice().reverse().map((cardData, index) => (
           <div key={index}>
             <Card
