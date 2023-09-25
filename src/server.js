@@ -248,6 +248,48 @@ app.post('/Casedelete', async (req, res) => {
   }
 });
 
+app.post('/fetchJudge', async (req, res) => {
+  try {
+    const sql = `SELECT name,mobileNumber FROM Judge`;
+
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    console.log('Data retrieved from MySQL:',result);
+    res.status(200).json({ success: true, data: result});
+  } catch (error) {
+    console.error('MySQL query error:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+app.post('/fetchLawyer', async (req, res) => {
+  try {
+    const sql = `SELECT name,mobileNumber FROM Lawyer`;
+
+    const result = await new Promise((resolve, reject) => {
+      db.query(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    console.log('Data retrieved from MySQL:',result);
+    res.status(200).json({ success: true, data: result});
+  } catch (error) {
+    console.error('MySQL query error:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
