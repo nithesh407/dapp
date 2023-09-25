@@ -179,9 +179,6 @@ const JudgeDocument = () => {
         visible={settingsVisible}
         onCancel={() => setSettingsVisible(false)}
         footer={[
-          <Button key="delete" type="primary" onClick={handleDelete}>
-            Delete
-          </Button>,
           <Button key="collaborate" type="primary" onClick={handleCollaborate}>
             Collaborate
           </Button>,
