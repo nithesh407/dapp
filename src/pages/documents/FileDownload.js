@@ -27,7 +27,7 @@ const FileDownload = ({ cid }) => {
       const url = window.URL.createObjectURL(new Blob([fileContent]));
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'downloaded-file.pdf';
+      a.download = 'downloaded-file.png';
       a.click();
       window.URL.revokeObjectURL(url);
     }
