@@ -1,7 +1,7 @@
 import { useEffect,useState }from 'react';
 import { Navigate } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument,Collaborate} from './pages';
+import { Login, Notification,NfCalendar,ProfilePage, ClientSignup, JudgeSignup, LawyerSignup,LawyerDocument,ClientDocument,JudgeDocument,JudgeCollab,LawyerCollab} from './pages';
 import { LawyerDashboard } from './userDashboard';
 import Cookies from 'js-cookie';
 import { ConfigProvider,theme } from 'antd';
@@ -15,6 +15,16 @@ const ConditionalRoute = () => {
       return <ClientDocument />;
     case 'Judge':
       return <JudgeDocument />;
+  }
+};
+
+const ConditionalCollab = () => {
+  const cookie=Cookies.get('role');
+  switch (cookie) {
+    case 'Lawyer':
+      return <LawyerCollab />;
+    case 'Judge':
+      return <JudgeCollab />;
   }
 };
 
@@ -78,8 +88,7 @@ function App() {
           <Route path='/SignUp/judge' element={<BasicRoute element={<JudgeSignup/>}/>}/>
           <Route path='/SignUp/lawyer' element={<BasicRoute element={<LawyerSignup/>}/>}/>
           <Route path="/document" element={<PrivateRoute element={<ConditionalRoute />}/>} />
-          <Route path="/collaborate" element={<PrivateRoute element={<Collaborate />}/>} />
-          
+          <Route path="/collaborate" element={<PrivateRoute element={<ConditionalCollab />}/>} />
         </Routes>
         </AuthProvider>
       </div>
