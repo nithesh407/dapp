@@ -5,6 +5,7 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
+import Cookies from 'js-cookie';
 
 
 const leftItems = [
@@ -128,12 +129,19 @@ const App = () => {
   return (
     <div className={styles['menu-container']} >
       <Menu style={{ minWidth: 1180}} onClick={onClick} selectedKeys={[current]} mode="horizontal">
-        {leftItems.map((item) => (
-          <Menu.Item  key={item.key} onClick={()=>{navigate('/'+item.key)}} icon={item.icon}>
+  {leftItems.map((item) => {
+    // Check if the role is not "Client" before rendering the "Collaborate" menu item
+    if (item.key !== 'collaborate' || Cookies.get('role') !== 'Client') {
+      return (
+        <Menu.Item key={item.key} onClick={() => navigate('/' + item.key)} icon={item.icon}>
           {item.label}
         </Menu.Item>
-        ))}
-      </Menu>
+      );
+    }
+    return null; // Return null to skip rendering "Collaborate" for clients
+  })}
+</Menu>
+
       <Menu style={{ minWidth: 350 }} onClick={onClick} selectedKeys={[current]} mode="horizontal">
         <Menu.Item onClick={handleNotificationClick} icon={<BellOutlined/>}>Notification</Menu.Item>
         <Menu.Item onClick={()=>setSettingsVisible(true)} icon={<SettingOutlined/>}>Settings</Menu.Item>
