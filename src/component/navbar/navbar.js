@@ -5,8 +5,6 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
-
-
 const leftItems = [
   {
     label: 'Dapp',
