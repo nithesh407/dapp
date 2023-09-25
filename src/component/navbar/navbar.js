@@ -5,6 +5,8 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
+
+
 const leftItems = [
   {
     label: 'Dapp',
@@ -175,28 +177,14 @@ const App = () => {
           </Space>
         }
       >
-      <Collapse defaultActiveKey={['0']} ghost={true} items={[
-        {
-          key: '0',
-          label: 'Account',
-          children: <ProfilePage/>,
-          showArrow: false,
-        },
-  {
-    key: '1',label: 'Dark Mode',
-    children: <Switch
-    checked={darkMode}
-    onChange={toggleDarkMode}
-    style={{ marginLeft: 8 }}
-  />,
-    showArrow: false,
-  },
-  {
-    key: '2',
-    label: 'This is panel header with no arrow icon',
-    children: <p></p>,
-    showArrow: false,
-  },]} />
+      <ProfilePage/>
+      <Menu mode='inline'>
+        <Menu.Item >
+            Dark Mode  
+            <Switch style={{marginLeft:10}}checked={darkMode} onChange={toggleDarkMode}/>
+        </Menu.Item>
+
+      </Menu>
       </Drawer>
       {contextHolder}
     </div>
