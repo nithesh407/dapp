@@ -6,14 +6,26 @@ import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';
 import { ProfilePage } from '../../pages';
 import Cookies from 'js-cookie';
+import download from '../../download.jpeg'; // Replace with the actual path to your image
 
-
-const leftItems = [
+const iconss = [
   {
-    label: 'Dapp',
     key: 'dapp',
-    icon: <DashboardOutlined />,
+    icon: (
+      <img
+        src={download}
+        alt="Star"
+        style={{
+          width: '20px', // Adjust the width and height as needed
+          height: '20px',
+          cursor: 'default',
+        }}
+      />
+    ),
   },
+];
+const leftItems = [
+  
   {
     label: 'Dashboard',
     key: 'dashboard',
@@ -128,6 +140,9 @@ const App = () => {
 
   return (
     <div className={styles['menu-container']} >
+      {iconss.map((item) => (
+        <div key={item.key} style={{marginTop:15}}>{item.icon}</div>
+      ))}
       <Menu style={{ minWidth: 1180}} onClick={onClick} selectedKeys={[current]} mode="horizontal">
   {leftItems.map((item) => {
     // Check if the role is not "Client" before rendering the "Collaborate" menu item
