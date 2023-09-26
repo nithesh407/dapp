@@ -2,7 +2,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const nodemailer = require('nodemailer');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
 const port = process.env.PORT || 3010;
 
@@ -21,6 +22,14 @@ db.connect((err) => {
     console.error('MySQL connection error:', err);
   } else {
     console.log('Connected to MySQL');
+  }
+});
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nitheshravikumar13631@gmail.com',         // Your Gmail address
+    pass: 'yjeorttflhlbeerp',
   }
 });
 
@@ -88,28 +97,63 @@ app.post('/lawyer-submit', async (req, res) => {
   }
 });
 
+const sendEmail = require('./sendEmail'); // Replace with the correct path
+
+// Call the sendEmail function
+sendEmail()
+  .then(() => {
+    console.log('Email sent successfully.');
+  })
+  .catch((error) => {
+    console.error('Error sending email:', error);
+  });
+
 app.post('/judge-submit', async (req, res) => {
   try {
     const { name, email, mobileNumber, password, uid, selectedState, selectedCourt, selectedDistrict } = req.body;
 
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
     const sql = `INSERT INTO Judge (name, email, mobileNumber, password, uid, state, courtType, district)
-                 VALUES (?,  ?, ?, ?, ?, ?, ?, ?)`;
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const result = await new Promise((resolve, reject) => {
-      db.query(sql, [name, email, mobileNumber, password, uid, selectedState, selectedCourt, selectedDistrict], (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
+      db.query(
+        sql,
+        [name, email, mobileNumber, password, uid, selectedState, selectedCourt, selectedDistrict],
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
         }
-      });
+      );
     });
 
     console.log('Data inserted into MySQL:', result);
-    res.status(200).json({success:true, message: 'Data inserted successfully' });
+
+    // Send the OTP via email
+    const mailOptions = {
+      from: 'nitheshravikumar13631@gmail.com', // Replace with your Gmail email address
+      to: email,
+      subject: 'Your OTP Code',
+      text: `Your OTP code is: ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Email sending error:', error);
+        res.status(500).json({ success: false, error: 'Error sending OTP via email', detailedError: error.message });
+      } else {
+        console.log('Email sent:', info.response);
+        res.status(200).json({ success: true, message: 'Data inserted successfully', otp });
+      }
+    });
   } catch (error) {
     console.error('MySQL query error:', error);
-    res.status(500).json({success:false, error: 'Internal server error' });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
 

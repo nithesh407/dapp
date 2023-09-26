@@ -1,2 +1,3 @@
 import  Navbar from "./navbar/navbar";
-export {Navbar};
+import VerifyMessage from "./verification/verify";
+export {Navbar,VerifyMessage};

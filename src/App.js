@@ -6,6 +6,7 @@ import { LawyerDashboard } from './userDashboard';
 import Cookies from 'js-cookie';
 import { ConfigProvider,theme } from 'antd';
 import { AuthProvider, useAuth } from './Authenticate';
+import { VerifyMessage } from './component';
 const ConditionalRoute = () => {
   const cookie=Cookies.get('role');
   switch (cookie) {
@@ -89,6 +90,7 @@ function App() {
           <Route path='/SignUp/lawyer' element={<BasicRoute element={<LawyerSignup/>}/>}/>
           <Route path="/document" element={<PrivateRoute element={<ConditionalRoute />}/>} />
           <Route path="/collaborate" element={<PrivateRoute element={<ConditionalCollab />}/>} />
+          <Route path="/verify" element={<VerifyMessage />} />
         </Routes>
         </AuthProvider>
       </div>

@@ -48,7 +48,7 @@ const JudgeSignup = () => {
       .then((response) => {
         // Handle the response as needed
         if(response.data.success === true){
-          navigate('/');
+          navigate('/verify');
           message.success('Registered successful')
         }
         else{
