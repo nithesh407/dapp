@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardOutlined, FileTextOutlined, CalendarOutlined, SettingOutlined, BellOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Menu, Layout, Drawer, notification,List,Avatar,Popover,Button,Space,Collapse, Switch} from 'antd';
+import { Menu, Drawer, notification,List,Avatar,Popover,Button,Space,Collapse, Switch} from 'antd';
 import { useLocation,useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
 import logo from '../../assets/profile.png';

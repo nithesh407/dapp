@@ -67,7 +67,7 @@ function App() {
     <div
       style={{
         background: darkMode ? 'black' : 'white',
-        height: 'calc(100vh - 40px)',
+        height: 'calc(100vh - 20px)',
       }}
     >
       <ConfigProvider
