@@ -2,7 +2,7 @@
 
 .login-container {
     max-width: 600px;
-    margin-left: 400px;
+    margin-left: -100px;
     margin-top: 150px;
     position: relative;
   }
@@ -15,9 +15,14 @@
   }
   .button-container {
     position: relative;
+   
   }
   .login-button{
     left: 10px;
+  }
+
+  .generate-otp-button{
+    margin-right: 100px;
   }
   
   

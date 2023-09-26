@@ -273,7 +273,7 @@ return (
                       />
                     </div>
                     <div>
-                      <Button type="primary" style={{ left: 50 }}>Verify OTP</Button>
+                      <Button type="primary" style={{ left: 20 }}>Verify OTP</Button>
                     </div>
                   </div>
                 </Form.Item>
